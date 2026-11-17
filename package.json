@@ -1,0 +1,13 @@
+{
+  "name": "crecer-con-numeros",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Calculadora web de crecimiento de capitales: interés compuesto mensual, aportes, duplicación y Regla del 72.",
+  "type": "module",
+  "scripts": {
+    "test": "node tests/run.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
