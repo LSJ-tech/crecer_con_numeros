@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Validación · Crecer con números</title>
+  <!-- Responsable: Maximiliano Montoya — rama feat/validation-qa -->
+  <!-- Abrir con un servidor local: http://localhost:8000/tests/test.html (ver README §6). -->
+  <style>
+    /* TODO: [Maximiliano Montoya] Estilos mínimos: colores por estado OK / FALLA / PENDIENTE / ERROR. */
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Validación del motor de cálculo</h1>
+    <p id="resumen-validacion" aria-live="polite">Ejecutando casos A–E…</p>
+    <div id="reporte-validacion"></div>
+  </main>
+
+  <script type="module">
+    import * as motor from '../js/mathEngine.js';
+    import { CASOS } from './validationCases.js';
+    import { ejecutarTodos, imprimirReporte, renderizarReporte } from '../js/validator.js';
+
+    // TODO: [Maximiliano Montoya] Ejecutar, imprimir en consola, dibujar en #reporte-validacion
+    //       y escribir los totales en #resumen-validacion.
+    try {
+      const reporte = ejecutarTodos(CASOS, motor);
+      imprimirReporte(reporte);
+      renderizarReporte(reporte, document.querySelector('#reporte-validacion'));
+    } catch (error) {
+      document.querySelector('#resumen-validacion').textContent = `Validador pendiente: ${error.message}`;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+# Dependencias y salidas (el proyecto no las necesita, pero por si alguien usa npx/herramientas)
+node_modules/
+dist/
+coverage/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Archivos temporales de Office (al abrir los .docx/.pptx de docs/)
+~$*

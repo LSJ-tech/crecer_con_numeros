@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Calculadora web gratuita de crecimiento de capitales: interés compuesto mensual, aportes, tiempo de duplicación y Regla del 72.">
+  <title>Crecer con números · Calculadora de crecimiento de capitales</title>
+  <!-- Responsable: Camilo Sepúlveda — rama feat/ui-charts -->
+  <!-- Contrato DOM: data-param, data-output, data-content y data-content-lista (README §4.5).
+       Los textos visibles aquí son RESPALDO: content.js los reemplaza al cargar. -->
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Chart.js (script clásico, expone window.Chart). `defer` garantiza que cargue antes que main.js. -->
+  <!-- TODO: [Camilo Sepúlveda] Agregar atributo integrity (SRI) con el hash publicado por jsDelivr. -->
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js" crossorigin="anonymous"></script>
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#simulador">Saltar al simulador</a>
+
+  <header class="site-header">
+    <h1 data-content="sitio.titulo">Crecer con números</h1>
+    <p class="site-header__subtitle" data-content="sitio.subtitulo">Calculadora web de crecimiento de capitales</p>
+  </header>
+
+  <main id="contenido">
+    <noscript>
+      <p class="aviso">Esta calculadora necesita JavaScript activado para funcionar.</p>
+    </noscript>
+
+    <!-- 1. Contexto -->
+    <section id="contexto" class="seccion" aria-labelledby="contexto-titulo">
+      <h2 id="contexto-titulo" data-content="contexto.titulo">¿Por qué esta calculadora?</h2>
+      <p data-content="contexto.descripcion"><!-- TODO: [Logan Silva] texto en content.js --></p>
+      <ul data-content-lista="contexto.datos"></ul>
+    </section>
+
+    <!-- 2. Simulador: parámetros -->
+    <section id="simulador" class="seccion" aria-labelledby="simulador-titulo">
+      <h2 id="simulador-titulo" data-content="parametros.titulo">Parámetros</h2>
+
+      <form id="form-parametros" class="parametros" novalidate>
+        <!-- TODO: [Camilo Sepúlveda] min/max/step se sobrescriben desde contracts.js (LIMITES) en uiController. -->
+
+        <div class="control" data-control="P">
+          <label for="p-numero" data-content="parametros.P.etiqueta">Capital inicial (P)</label>
+          <div class="control__entrada">
+            <span class="control__unidad" aria-hidden="true">$</span>
+            <input id="p-numero" type="number" data-param="P" min="0" max="100000000" step="10000" value="1000000" inputmode="numeric" aria-describedby="ayuda-p">
+          </div>
+          <input id="p-rango" type="range" data-param="P" min="0" max="100000000" step="10000" value="1000000" aria-label="Capital inicial, control deslizante" aria-describedby="ayuda-p">
+          <p id="ayuda-p" class="control__ayuda" data-content="parametros.P.ayuda"></p>
+        </div>
+
+        <div class="control" data-control="r">
+          <label for="r-numero" data-content="parametros.r.etiqueta">Tasa anual nominal (r)</label>
+          <div class="control__entrada">
+            <input id="r-numero" type="number" data-param="r" min="0" max="20" step="0.05" value="5" inputmode="decimal" aria-describedby="ayuda-r">
+            <span class="control__unidad" aria-hidden="true">%</span>
+          </div>
+          <input id="r-rango" type="range" data-param="r" min="0" max="20" step="0.05" value="5" aria-label="Tasa anual nominal, control deslizante" aria-describedby="ayuda-r">
+          <p id="ayuda-r" class="control__ayuda" data-content="parametros.r.ayuda"></p>
+        </div>
+
+        <div class="control" data-control="M">
+          <label for="m-numero" data-content="parametros.M.etiqueta">Aporte mensual (M)</label>
+          <div class="control__entrada">
+            <span class="control__unidad" aria-hidden="true">$</span>
+            <input id="m-numero" type="number" data-param="M" min="0" max="2000000" step="5000" value="50000" inputmode="numeric" aria-describedby="ayuda-m">
+          </div>
+          <input id="m-rango" type="range" data-param="M" min="0" max="2000000" step="5000" value="50000" aria-label="Aporte mensual, control deslizante" aria-describedby="ayuda-m">
+          <p id="ayuda-m" class="control__ayuda" data-content="parametros.M.ayuda"></p>
+        </div>
+
+        <div class="control" data-control="t">
+          <label for="t-numero" data-content="parametros.t.etiqueta">Plazo (t)</label>
+          <div class="control__entrada">
+            <input id="t-numero" type="number" data-param="t" min="1" max="40" step="1" value="10" inputmode="numeric" aria-describedby="ayuda-t">
+            <span class="control__unidad" aria-hidden="true">años</span>
+          </div>
+          <input id="t-rango" type="range" data-param="t" min="1" max="40" step="1" value="10" aria-label="Plazo en años, control deslizante" aria-describedby="ayuda-t">
+          <p id="ayuda-t" class="control__ayuda" data-content="parametros.t.ayuda"></p>
+        </div>
+
+        <button id="btn-restablecer" type="button" class="boton" data-content="parametros.restablecer">Restablecer valores de ejemplo</button>
+      </form>
+
+      <p id="mensaje-error" class="aviso aviso--error" role="alert" hidden></p>
+    </section>
+
+    <!-- 3. Resultados: tarjetas de resumen -->
+    <section id="resultados" class="seccion" aria-labelledby="resultados-titulo" aria-live="polite">
+      <h2 id="resultados-titulo" data-content="resultados.titulo">Resultados</h2>
+
+      <div class="tarjetas">
+        <article class="tarjeta" id="tarjeta-monto-final">
+          <h3 data-content="resultados.montoFinal.titulo">Monto final</h3>
+          <p class="tarjeta__valor" data-output="montoConAportes">—</p>
+          <dl class="tarjeta__detalle">
+            <dt>Sin aportes, A(t)</dt>
+            <dd data-output="montoSinAportes">—</dd>
+            <dt>Aportes con interés, S</dt>
+            <dd data-output="valorFuturoAportes">—</dd>
+          </dl>
+          <p class="tarjeta__nota" data-content="resultados.montoFinal.nota"></p>
+        </article>
+
+        <article class="tarjeta" id="tarjeta-duplicacion">
+          <h3 data-content="resultados.duplicacion.titulo">Tiempo de duplicación</h3>
+          <dl class="tarjeta__comparacion">
+            <dt data-content="resultados.duplicacion.exacto">Exacto (logaritmos)</dt>
+            <dd data-output="tiempoDuplicacion">—</dd>
+            <dt data-content="resultados.duplicacion.regla72">Regla del 72</dt>
+            <dd data-output="regla72">—</dd>
+          </dl>
+          <p class="tarjeta__nota" data-content="resultados.duplicacion.nota"></p>
+        </article>
+
+        <article class="tarjeta" id="tarjeta-tasa-requerida">
+          <h3 data-content="resultados.tasaRequerida.titulo">Tasa para duplicar en el plazo</h3>
+          <p class="tarjeta__valor" data-output="tasaParaDuplicar">—</p>
+          <dl class="tarjeta__detalle">
+            <dt>Equivalente mensual</dt>
+            <dd data-output="tasaMensualParaDuplicar">—</dd>
+          </dl>
+          <p class="tarjeta__nota" data-content="resultados.tasaRequerida.nota"></p>
+        </article>
+
+        <article class="tarjeta" id="tarjeta-desglose">
+          <h3 data-content="resultados.desglose.titulo">Aportado vs. interés</h3>
+          <dl class="tarjeta__comparacion">
+            <dt data-content="resultados.desglose.totalAportado">Total aportado</dt>
+            <dd data-output="totalAportado">—</dd>
+            <dt data-content="resultados.desglose.interesGenerado">Interés generado</dt>
+            <dd data-output="interesGenerado">—</dd>
+          </dl>
+        </article>
+      </div>
+    </section>
+
+    <!-- 4. Distinción de modelos -->
+    <section id="modelos" class="seccion" aria-labelledby="modelos-titulo">
+      <h2 id="modelos-titulo" data-content="modelos.titulo">Dos modelos, dos fórmulas</h2>
+
+      <div class="modelos">
+        <article class="modelo modelo--sin-aportes">
+          <h3 data-content="modelos.sinAportes.titulo">Sin aportes: sucesión geométrica</h3>
+          <ul class="modelo__formulas" data-content-lista="modelos.sinAportes.formulas"></ul>
+          <p data-content="modelos.sinAportes.descripcion"></p>
+        </article>
+
+        <article class="modelo modelo--con-aportes">
+          <h3 data-content="modelos.conAportes.titulo">Con aportes mensuales: relación de recurrencia</h3>
+          <ul class="modelo__formulas" data-content-lista="modelos.conAportes.formulas"></ul>
+          <p data-content="modelos.conAportes.descripcion"></p>
+        </article>
+
+        <article class="modelo modelo--duplicacion">
+          <h3 data-content="modelos.duplicacion.titulo">Duplicar el capital: logaritmos y Regla del 72</h3>
+          <ul class="modelo__formulas" data-content-lista="modelos.duplicacion.formulas"></ul>
+          <p data-content="modelos.duplicacion.descripcion"></p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 5. Gráfico comparativo -->
+    <section id="grafico" class="seccion" aria-labelledby="grafico-titulo">
+      <h2 id="grafico-titulo" data-content="grafico.titulo">Saldo mes a mes</h2>
+      <figure class="grafico">
+        <div class="grafico__lienzo">
+          <canvas id="grafico-saldos" role="img" aria-label="Gráfico de líneas del saldo mes a mes: curva sin aportes y curva con aportes"></canvas>
+        </div>
+        <figcaption data-content="grafico.descripcion">Comparación del saldo sin aportes y con aportes mensuales.</figcaption>
+      </figure>
+
+      <details id="geogebra" class="geogebra">
+        <summary data-content="grafico.geogebra.titulo">Verificar en GeoGebra</summary>
+        <p data-content="grafico.geogebra.instrucciones"></p>
+        <pre id="geogebra-comandos"></pre>
+      </details>
+    </section>
+
+    <!-- 6. Tabla de valores -->
+    <section id="tabla" class="seccion" aria-labelledby="tabla-titulo">
+      <h2 id="tabla-titulo" data-content="tabla.titulo">Tabla de valores</h2>
+
+      <fieldset class="tabla__modo">
+        <legend data-content="tabla.vista">Vista</legend>
+        <label><input type="radio" name="modo-tabla" value="mensual" checked> <span data-content="tabla.modoMensual">Mensual</span></label>
+        <label><input type="radio" name="modo-tabla" value="anual"> <span data-content="tabla.modoAnual">Resumen anual</span></label>
+      </fieldset>
+
+      <div class="tabla__scroll" role="region" aria-labelledby="tabla-titulo" tabindex="0">
+        <table id="tabla-saldos">
+          <caption data-content="tabla.caption">Saldo sin aportes y con aportes por periodo</caption>
+          <thead>
+            <tr>
+              <th scope="col" data-content="tabla.columnas.periodo">Periodo</th>
+              <th scope="col" data-content="tabla.columnas.sinAportes">Sin aportes</th>
+              <th scope="col" data-content="tabla.columnas.conAportes">Con aportes</th>
+              <th scope="col" data-content="tabla.columnas.totalAportado">Total aportado</th>
+              <th scope="col" data-content="tabla.columnas.interesGenerado">Interés generado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- uiController.renderizarTabla() -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 7. Supuestos y limitaciones (obligatorio y siempre visible) -->
+    <aside id="supuestos" class="seccion supuestos" aria-labelledby="supuestos-titulo">
+      <h2 id="supuestos-titulo" data-content="supuestos.titulo">Supuestos y limitaciones</h2>
+      <ul data-content-lista="supuestos.lista">
+        <li>Tasa constante, capitalización mensual y aportes al final de cada mes.</li>
+        <li>Sin comisiones, impuestos ni inflación. Es una simulación educativa.</li>
+      </ul>
+    </aside>
+
+    <!-- 8. Referencias -->
+    <section id="referencias" class="seccion" aria-labelledby="referencias-titulo">
+      <h2 id="referencias-titulo" data-content="referencias.titulo">Referencias</h2>
+      <ol class="referencias" data-content-lista="referencias.lista"></ol>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p data-content="sitio.pie">Proyecto académico · Crecer con números</p>
+  </footer>
+</body>
+</html>

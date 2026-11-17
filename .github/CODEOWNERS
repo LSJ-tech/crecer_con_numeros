@@ -1,0 +1,29 @@
+# Dueños de cada archivo: GitHub pide su revisión automáticamente en cada PR.
+# TODO: reemplazar <usuario-...> por el usuario real de GitHub de cada integrante,
+#       quitar el "# " inicial de cada regla y activar "Require review from Code Owners"
+#       en Settings → Branches (rama dev y main).
+
+# Compartidos (congelados): cualquier cambio lo revisan los 4
+# /js/contracts.js            <usuario-gianni> <usuario-camilo> <usuario-maximiliano> <usuario-logan>
+# /.github/                   <usuario-gianni> <usuario-camilo> <usuario-maximiliano> <usuario-logan>
+
+# Gianni Antonietti — feat/math-engine
+# /js/mathEngine.js           <usuario-gianni>
+
+# Camilo Sepúlveda — feat/ui-charts
+# /index.html                 <usuario-camilo>
+# /css/                       <usuario-camilo>
+# /js/uiController.js         <usuario-camilo>
+# /js/chartManager.js         <usuario-camilo>
+# /js/main.js                 <usuario-camilo>
+
+# Maximiliano Montoya — feat/validation-qa
+# /js/validator.js            <usuario-maximiliano>
+# /tests/                     <usuario-maximiliano>
+# /package.json               <usuario-maximiliano>
+
+# Logan Silva — feat/docs-content
+# /README.md                  <usuario-logan>
+# /CONTRIBUTING.md            <usuario-logan>
+# /js/content.js              <usuario-logan>
+# /docs/                      <usuario-logan>

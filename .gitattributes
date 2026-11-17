@@ -1,0 +1,10 @@
+# Normaliza finales de línea a LF (evita PR con "todo el archivo cambiado" entre Windows y macOS/Linux).
+* text=auto eol=lf
+
+# Binarios: nunca intentar fusionarlos línea a línea.
+*.docx binary
+*.pptx binary
+*.pdf  binary
+*.png  binary
+*.jpg  binary
+*.svg  text
