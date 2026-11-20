@@ -1,10 +1,20 @@
+<!--
+  NOTA PARA ASISTENTES DE IA (Claude, Copilot, ChatGPT, Gemini, Cursor, Codex u otro):
+  Antes de trabajar en este repositorio, lee AGENTS.md y AUDITORIA.md.
+  En cada PR debes mantener al día AUDITORIA.md (hallazgos, tareas marcadas con [x] y Registro) y este README
+  (si cambia un comportamiento, un contrato, un comando, la estructura o la Hoja de ruta §8).
+-->
+
 # Crecer con números
 
 **Calculadora web de crecimiento de capitales.** Un simulador interactivo, gratuito y sin instalación que convierte sucesiones, funciones exponenciales y logaritmos en decisiones de ahorro concretas.
 
 > **Estado:** 🚧 andamiaje inicial (`v0.1.0`). Los módulos contienen contratos, JSDoc y `TODO` por responsable; la lógica todavía no está implementada.
+>
+> **Auditoría y tareas:** el estado del proyecto, los hallazgos abiertos y las tareas de cada integrante por prioridad están en **[AUDITORIA.md](AUDITORIA.md)**.
 
-<!-- TODO: [Logan Silva] Agregar curso, institución, docente y enlace a GitHub Pages cuando exista. -->
+Proyecto de la asignatura **MVFM01**, Ingeniería en Informática, con la docente **Giselle Mora Ocares**.
+<!-- TODO: [Logan Silva] Confirmar la institución y agregar el enlace a GitHub Pages cuando exista (AUDITORIA.md · A-13, A-19). -->
 
 ## Tabla de contenidos
 
@@ -182,11 +192,16 @@ crecer_con_numeros/
 │   └── run.js                  # Ejecutor en Node (npm test)                  · Maximiliano
 ├── docs/                       # Documentos de las Etapas 1 y 2               · Logan
 ├── .github/
-│   ├── CODEOWNERS              # Revisor automático por archivo
+│   ├── CODEOWNERS              # Dueño + revisor automático por archivo       · Los 4
+│   ├── workflows/pruebas.yml   # CI: npm test en cada PR y push a dev/main     · Los 4
+│   ├── copilot-instructions.md # Instrucciones para GitHub Copilot           · Los 4
 │   └── pull_request_template.md
 ├── .vscode/extensions.json     # Extensiones recomendadas (Live Server)
 ├── .editorconfig  .gitattributes  .gitignore
 ├── package.json                # Solo "type": "module" y el script de pruebas
+├── AUDITORIA.md                # Auditoría viva: hallazgos y tareas por prioridad · Los 4
+├── AGENTS.md                   # Reglas para asistentes de IA                 · Los 4
+├── CLAUDE.md  GEMINI.md        # Importan AGENTS.md (Claude Code / Gemini)     · Los 4
 ├── CONTRIBUTING.md             # Flujo Git detallado                          · Logan
 └── README.md                   #                                              · Logan
 ```
@@ -274,7 +289,12 @@ Constantes: `LIMITES` (rangos de los controles), `PARAMETROS_INICIALES` (reprodu
 | **Camilo Sepúlveda** | Interfaz, gráfico e integración | `feat/ui-charts` | `index.html`, `css/styles.css`, `js/uiController.js`, `js/chartManager.js`, `js/main.js` |
 | **Maximiliano Montoya** | Validación y QA | `feat/validation-qa` | `js/validator.js`, `tests/*`, `package.json` |
 | **Logan Silva** | Documentación y contenidos | `feat/docs-content` | `README.md`, `CONTRIBUTING.md`, `js/content.js`, `docs/` |
-| **Los 4** | Contratos compartidos | `chore/*` | `js/contracts.js`, `.github/*`, archivos de configuración |
+| **Los 4** | Contratos compartidos | `chore/*` | `js/contracts.js`, `.github/*`, `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, archivos de configuración |
+| **Los 4** | Documentación viva | (en el PR de cada uno) | `AUDITORIA.md` y las casillas de la [Hoja de ruta](#8-hoja-de-ruta) |
+
+**Prioridades y avance:** cada integrante tiene su lista de tareas ordenada por prioridad (P1 → P3) en [AUDITORIA.md §5](AUDITORIA.md#5-tareas-por-integrante-en-orden-de-prioridad). Al terminar una tarea, la marca con `[x]`, fecha y número de PR en el mismo PR en que la entrega.
+
+**Asistentes de IA:** si usas Claude, Copilot, ChatGPT, Gemini, Cursor u otro, pídele que lea [AGENTS.md](AGENTS.md) antes de trabajar. Ahí están las reglas de dueños, ramas y documentación.
 
 Cada función pendiente tiene un comentario `// TODO: [Nombre del responsable]`. Para ver lo tuyo:
 
@@ -315,6 +335,8 @@ cd crecer_con_numeros
 
 Cada caso termina en **OK**, **FALLA**, **PENDIENTE** (función aún sin implementar) o **ERROR**.
 
+- **Integración continua:** GitHub Actions ([`.github/workflows/pruebas.yml`](.github/workflows/pruebas.yml)) corre `npm test` en cada PR y push a `dev` y `main`. Es un check obligatorio para mergear.
+
 ### Publicar (GitHub Pages)
 
 *Settings → Pages → Deploy from a branch → `main` / `(root)`*. La calculadora queda disponible en `https://lsj-tech.github.io/crecer_con_numeros/` sin ningún paso de compilación.
@@ -323,7 +345,7 @@ Cada caso termina en **OK**, **FALLA**, **PENDIENTE** (función aún sin impleme
 
 ```text
 main  ← versiones estables (entregas). Protegida.
- └── dev  ← integración. Protegida. Destino de todos los PR.
+ └── dev  ← integración. Protegida. Rama por defecto. Destino de todos los PR.
       ├── feat/math-engine     (Gianni)
       ├── feat/ui-charts       (Camilo)
       ├── feat/validation-qa   (Maximiliano)
@@ -343,10 +365,16 @@ git push
 # PR en GitHub: base = dev  ←  compare = feat/<tu-rama>
 ```
 
+`main` y `dev` exigen un PR con **1 aprobación del revisor** que asigna [`CODEOWNERS`](.github/CODEOWNERS) (dueño + revisor por archivo) y el check **`npm test`** en verde. Nadie puede saltarse estas reglas, ni siquiera un administrador.
+
 Comandos completos, convención de commits, orden de integración y resolución de conflictos en **[CONTRIBUTING.md](CONTRIBUTING.md)**.
 
 ## 8. Hoja de ruta
 
+Resumen por entregable. El detalle por persona y prioridad está en [AUDITORIA.md §5](AUDITORIA.md#5-tareas-por-integrante-en-orden-de-prioridad).
+
+- [x] **Repositorio:** rama `dev`, protección de `main` y `dev`, `CODEOWNERS` en pares, CI y auditoría inicial (PR #2).
+- [ ] **Los 4:** cerrar los hallazgos 🔴 de [AUDITORIA.md](AUDITORIA.md) (A-01, A-04, A-05).
 - [ ] **Gianni:** funciones de `mathEngine.js` → casos A–E en **OK**.
 - [ ] **Maximiliano:** `validator.js` + casos borde (grupo X) → `npm test` y `tests/test.html` operativos.
 - [ ] **Logan:** textos de `content.js` (contexto, fórmulas, supuestos, referencias APA).
