@@ -30,14 +30,14 @@ Todos trabajan en la rama **`dev`**. Cada integrante edita solo sus archivos:
 
 ## 3. Reglas obligatorias
 
-- **Push directo solo a `dev`.** Es la decisión del equipo y las ramas no tienen protección (`AUDITORIA.md` · A-24). **No hagas push a `main`:** solo se actualiza al cerrar una entrega, con el acuerdo de los 4 (CONTRIBUTING §6).
+- **Push directo solo a `dev`.** Es la decisión del equipo: las ramas no tienen protección y **nadie aprueba los cambios de otro** (`AUDITORIA.md` · A-24). El integrante, y tú con él, responden por lo que suben. **No hagas push a `main`:** solo se actualiza al cerrar una entrega, con el acuerdo de los 4 (CONTRIBUTING §6).
 - **Haz commit y push solo cuando tu humano lo pida.**
 - **Sin protección, la disciplina es la única defensa:**
   - Edita **solo** los archivos del integrante (tabla de §2). Si hace falta cambiar un archivo de otra persona, no lo toques: díselo a tu humano para que se lo pida.
   - `git pull --rebase origin dev` justo antes de cada push. Si el push es rechazado, vuelve a hacer `pull --rebase`.
   - **Nunca** `git push --force` ni `--force-with-lease`, ni reescribas commits ya subidos.
   - Si un conflicto aparece en un archivo de otra persona, conserva su versión. En el Registro de `AUDITORIA.md`, conserva ambas líneas.
-- **`js/contracts.js` está congelado.** Nunca se sube directo: va en una rama `chore/contracts-*` con PR y el OK de los 4 (CONTRIBUTING §5).
+- **`js/contracts.js` está congelado.** Si hay que cambiarlo, tu humano debe avisar al grupo **antes**, porque rompe el trabajo de los demás (CONTRIBUTING §5).
 - **Arquitectura** (README §4.2):
   - Solo `main.js` importa los demás módulos.
   - `mathEngine.js` son funciones puras, sin DOM y sin redondear.
@@ -58,7 +58,7 @@ En el **mismo commit** del cambio:
    - Marca con `- [x]` las tareas completadas del integrante en §5 y agrega `✅ AAAA-MM-DD`. Marca solo las del integrante para el que trabajas.
    - Agrega los hallazgos nuevos con el siguiente ID libre, con evidencia (archivo y línea) y solución.
    - Agrega una línea al Registro (§8): fecha · persona + IA usada · qué cambió.
-2. **`README.md`:** actualízalo si cambia un comportamiento, un contrato (datos o DOM), un comando, la estructura de carpetas o la Hoja de ruta (§8). Si el README no es del integrante, limita el cambio a lo que tu commit afecta; el dueño lo revisa después.
+2. **`README.md`:** actualízalo si cambia un comportamiento, un contrato (datos o DOM), un comando, la estructura de carpetas o la Hoja de ruta (§8). Si el README no es del integrante, limita el cambio a lo que tu commit afecta y dile a tu humano que le avise a Logan, que es el dueño.
 3. **JSDoc:** al día en cada función que modifiques.
 4. **Referencias:** `content.js` y README §9 deben decir lo mismo.
 5. **Cambios que afectan a otra persona** (ej.: una firma nueva): díselo a tu humano para que avise al equipo.

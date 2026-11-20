@@ -17,7 +17,7 @@
 | | |
 |---|---|
 | **Auditoría inicial** | 2026-11-20 · Logan Silva con Claude (Opus 5.5) |
-| **Última actualización** | 2026-11-20 · flujo con push directo a `dev` (A-24) |
+| **Última actualización** | 2026-11-20 · push directo sin aprobaciones y sin `CODEOWNERS` (A-03, A-24) |
 | **Versión auditada** | `v0.1.0` (andamiaje, commit `c03f153`) |
 | **Alcance** | Código (`js/`, `index.html`, `css/`), pruebas (`tests/`), configuración, documentos de `docs/` (Etapas 1 y 2 y presentación) y configuración del repositorio en GitHub |
 
@@ -64,7 +64,7 @@ El andamiaje está bien diseñado: contratos claros, módulos que no se pisan y 
 |---|:---:|---|---|---|---|
 | A-01 | 🔴 | Repo | Maximiliano no tiene acceso: su invitación está pendiente | Maximiliano | Pendiente |
 | A-02 | 🔴 | Repo | No existía `dev` y la rama por defecto era `main` | Logan | ✅ Resuelto · 2026-11-20 · PR #2 |
-| A-03 | 🔴 | Repo | `CODEOWNERS` con un solo dueño por archivo habría bloqueado los PR | Los 4 | ✅ Resuelto · 2026-11-20 · PR #2 |
+| A-03 | 🔴 | Repo | `CODEOWNERS` con un solo dueño por archivo habría bloqueado los PR | Los 4 | ⛔ Descartado · 2026-11-20 |
 | A-04 | 🔴 | Docs | La presentación (`.pptx`) describe otro producto, con otras referencias y otro cronograma | Logan + Gianni | Pendiente |
 | A-05 | 🔴 | Docs | Etapa 2, respuesta 4: «Los aportes suman $6.000.000, por lo que el interés es $2.411.123,47» no cuadra | Logan | Pendiente |
 | A-06 | 🟠 | QA | `npm test` termina en verde aunque el validador no exista | Maximiliano | Pendiente |
@@ -91,8 +91,7 @@ El andamiaje está bien diseñado: contratos claros, módulos que no se pisan y 
 
 ### A-01 · Maximiliano no tiene acceso al repositorio 🔴
 
-- **Evidencia:** la invitación a `true-max-02` (permiso *write*) sigue pendiente desde el 2026-11-16. Mientras no la acepte, no puede hacer push y GitHub ignora su usuario en `CODEOWNERS`.
-- **Efecto en `CODEOWNERS`:** GitHub marca `@true-max-02` como *Unknown owner* en las líneas donde aparece. Se corrige solo cuando acepte.
+- **Evidencia:** la invitación a `true-max-02` (permiso *write*) sigue pendiente desde el 2026-11-16. Mientras no la acepte, no puede hacer push.
 - **Solución:** Maximiliano acepta en <https://github.com/LSJ-tech/crecer_con_numeros/invitations> o desde el correo de GitHub. Las invitaciones vencen a los 7 días; si vence, Logan la reenvía en *Settings → Collaborators*.
 
 ### A-02 · Rama de trabajo `dev` 🔴 · ✅
@@ -100,11 +99,10 @@ El andamiaje está bien diseñado: contratos claros, módulos que no se pisan y 
 - **Evidencia:** en GitHub solo existían `main` y `chore/scaffolding`, y `main` era la rama por defecto.
 - **Solución aplicada:** se creó `dev` desde `main` y quedó como rama por defecto. Es la rama de trabajo diaria y los 4 hacen push directo ahí (CONTRIBUTING §2). `main` solo se actualiza al cerrar una entrega. La protección de ramas se trata en A-24.
 
-### A-03 · Diseño de `CODEOWNERS` 🔴 · ✅
+### A-03 · Diseño de `CODEOWNERS` 🔴 · ⛔ Descartado
 
-- **Evidencia:** el diseño original daba un solo dueño por archivo y pedía activar «Require review from Code Owners». GitHub no cuenta la aprobación del autor del PR, así que cada persona habría quedado bloqueada en sus propios PR. Además, con varios dueños en una línea GitHub exige la aprobación de **uno**, no de los 4.
-- **Solución aplicada:** `.github/CODEOWNERS` lista **dueño + revisor** según la tabla «Quién revisa» de CONTRIBUTING §3. La regla de que los 4 aprueben un cambio de contrato queda como **acuerdo del equipo** (CONTRIBUTING §5), porque GitHub no la puede imponer.
-- **Con push directo (A-24):** `CODEOWNERS` solo actúa cuando alguien abre un PR opcional, y entonces GitHub pide la revisión al dueño y al revisor.
+- **Evidencia:** el diseño original daba un solo dueño por archivo y pedía activar «Require review from Code Owners». GitHub no cuenta la aprobación del autor del PR, así que cada persona habría quedado bloqueada en sus propios PR.
+- **Descartado (2026-11-20):** el equipo decidió que nadie aprueba los cambios de otro (A-24), así que se **eliminó** `.github/CODEOWNERS`. Sin aprobaciones, el problema ya no existe.
 
 ### A-04 · La presentación no coincide con el producto 🔴
 
@@ -225,14 +223,13 @@ Comprobado en Node 22 con `es-CL`:
 
 ### A-24 · Ramas sin protección 🟠 · ⚠️ Riesgo aceptado
 
-- **Decisión del equipo (2026-11-20):** `main` y `dev` quedan sin protección en GitHub para que los 4 puedan hacer push directo, sin PR ni aprobaciones.
+- **Decisión del equipo (2026-11-20):** `main` y `dev` quedan sin protección en GitHub para que los 4 puedan hacer push directo. **Nadie aprueba ni revisa los cambios de otro**, y por eso se eliminó `CODEOWNERS` (A-03).
 - **Riesgo:**
   - Cualquiera puede subir a `main` por error, o borrar el trabajo de otro con `git push --force`.
-  - No hay revisión previa: un error se ve recién cuando ya está subido.
+  - No hay revisión: un error se ve recién cuando ya está subido, y cada uno responde por lo suyo.
 - **Cómo se mitiga:**
   - Las reglas de oro de CONTRIBUTING: solo tus archivos, `git pull --rebase` antes de cada push y **nunca** `--force`. `AGENTS.md` obliga a lo mismo a las IA del equipo.
   - El CI marca ✘ en el commit que rompe las pruebas (A-12).
-  - Revisión posterior y semanal de los commits del compañero asignado (CONTRIBUTING §3).
 - **Opción intermedia, si el equipo cambia de idea:** una regla de protección que **solo** bloquee el force-push y el borrado de `main` y `dev`. No exige PR ni aprobaciones, así que mantiene el push directo y elimina el riesgo más grave.
 
 ## 5. Tareas por integrante (en orden de prioridad)
@@ -274,7 +271,6 @@ Su trabajo desbloquea a todos: conviene que suba la **entrega 1 lo antes posible
   - `simular` y `resumenAnual`.
   - Pasan a OK los casos D5, D6 y el grupo X.
 - [ ] **P2** · Acordar con Maximiliano el comportamiento en los casos borde (A-07, A-08).
-- [ ] **P2** · Revisar en GitHub los cambios de Maximiliano en `validator.js` (CONTRIBUTING §3).
 - [ ] **P3** · Preparar el **video de la semana 5** (bitácora de la Etapa 2):
   - Usar los números reales del producto.
   - Decir correctamente la frase de los $6.000.000 (A-05).
@@ -288,7 +284,6 @@ Su trabajo desbloquea a todos: conviene que suba la **entrega 1 lo antes posible
 - [ ] **P1** · Hacer que `tests/run.js` salga con código 1 ante un error real (A-06).
 - [ ] **P2** · Agregar los casos X1–X7 en `tests/validationCases.js`, relanzando lo que no sea `RangeError` (A-08).
 - [ ] **P2** · Implementar `renderizarReporte` y los estilos de `tests/test.html` por estado.
-- [ ] **P2** · Revisar en GitHub los cambios de Gianni.
 - [ ] **P3** · Con Camilo, verificar ambas curvas en GeoGebra (caso D).
 
 ### Camilo Sepúlveda · interfaz, gráfico e integración (ámbitos `ui` y `chart`)
@@ -305,13 +300,12 @@ Puede empezar **ya** con HTML y CSS. Conecta `simular()` cuando el motor esté e
 - [ ] **P2** · `chartManager.js`: `crearGrafico` y `actualizarGrafico`, con colores que respondan al tema (A-17) y el SRI de Chart.js (A-11).
 - [ ] **P2** · `renderizarTabla` y `renderizarResumen`, con la vista anual por defecto (A-15).
 - [ ] **P2** · Accesibilidad: anuncio con `aria-live` acotado (A-10) y `aria-valuetext` en los sliders (A-16).
-- [ ] **P2** · Revisar en GitHub los cambios de Logan.
 - [ ] **P3** · `generarComandosGeoGebra` y verificación de curvas con Maximiliano.
 - [ ] **P3** · Etiquetar «(sin aportes)» las tarjetas de duplicación y tasa (A-09, con Logan).
 
 ### Logan Silva · documentación y contenidos (ámbitos `docs` y `content`)
 
-- [x] **P1** · Crear `dev` como rama de trabajo, configurar `CODEOWNERS` en pares y el CI (A-02, A-03, A-12). ✅ 2026-11-20
+- [x] **P1** · Crear `dev` como rama de trabajo y configurar el CI (A-02, A-12). ✅ 2026-11-20
 - [ ] **P1** · Trabajar en `dev` con `git pull --rebase` antes de cada push (CONTRIBUTING §2).
 - [ ] **P1** · Confirmar que Maximiliano aceptó la invitación y reenviarla si venció (A-01).
 - [ ] **P1** · Implementar `obtenerTexto()` en `content.js` (A-22).
@@ -321,14 +315,13 @@ Puede empezar **ya** con HTML y CSS. Conecta `simular()` cuando el motor esté e
   - Contexto, ayudas de parámetros y notas de las tarjetas (A-09).
   - Modelos, supuestos y referencias.
 - [ ] **P2** · Corregir las citas APA en el README (A-18).
-- [ ] **P2** · Revisar en GitHub los cambios de Camilo.
 - [ ] **P3** · Renombrar los archivos de `docs/`, agregar `LICENSE` y borrar la rama `chore/scaffolding` (A-20).
 - [ ] **P3** · Activar GitHub Pages y completar la institución y el enlace en el README (A-13, A-19).
 
 ### Los 4
 
 - [ ] **P1** · Leer `AUDITORIA.md` y `AGENTS.md`, o pedirle a su asistente de IA que los lea antes de trabajar.
-- [ ] **P3** · Revisión cruzada final: cada uno ejecuta y explica el producto completo.
+- [ ] **P3** · Prueba cruzada final: cada uno ejecuta y explica el producto completo.
 - [ ] **P3** · Pasar `dev` a `main`, etiqueta `v1.0.0` y publicación en GitHub Pages (CONTRIBUTING §6).
 - [ ] Opcional · Usar el correo privado de GitHub en los commits (A-21).
 
@@ -380,3 +373,4 @@ Otros datos de la Etapa 2 también verificados: los incrementos entre intervalos
 |---|---|---|---|
 | 2026-11-20 | Logan Silva + Claude (Opus 5.5) | Auditoría inicial (A-01 a A-23). Se crea `dev` (rama por defecto), `CODEOWNERS` en pares, CI con `npm test`, instrucciones para asistentes de IA (`AGENTS.md`) y `AUDITORIA.md`. Se cierran A-02, A-03 y A-12; A-19 queda parcial. | PR #2 |
 | 2026-11-20 | Logan Silva + Claude (Opus 5.5) | El equipo decide trabajar con push directo a `dev`, sin protección de ramas (A-24, riesgo aceptado). CONTRIBUTING, README, `AGENTS.md` y esta auditoría pasan al nuevo flujo (`git pull --rebase`, nunca `--force`). Se quita el revisor temporal del motor. | push a `dev` |
+| 2026-11-20 | Logan Silva + Claude (Opus 5.5) | Nadie aprueba ni revisa los cambios de otro: se elimina `.github/CODEOWNERS` (A-03 descartado), junto con la tabla «Quién revisa» y las tareas de revisión. Los cambios a `contracts.js` solo requieren avisar al grupo antes. | push a `dev` |

@@ -1,5 +1,5 @@
-<!-- Los PR son opcionales: el flujo normal es push directo a dev (CONTRIBUTING §2).
-     Úsalos para cambios grandes o de contratos (CONTRIBUTING §5). -->
+<!-- Los PR son opcionales: el flujo normal es push directo a dev y nadie tiene que aprobar (CONTRIBUTING §2 y §3).
+     Úsalos solo si quieres mostrarle un cambio al equipo antes de integrarlo. -->
 
 ## Qué cambia
 
@@ -11,7 +11,7 @@
 - [ ] Camilo Sepúlveda (`ui`, `chart`)
 - [ ] Maximiliano Montoya (`qa`)
 - [ ] Logan Silva (`docs`, `content`)
-- [ ] Cambio compartido (`contracts`, `repo`): requiere el OK de los 4
+- [ ] Cambio compartido (`contracts`, `repo`): avisé al grupo antes
 
 ## Hallazgos de la auditoría
 

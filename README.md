@@ -192,7 +192,6 @@ crecer_con_numeros/
 │   └── run.js                  # Ejecutor en Node (npm test)                  · Maximiliano
 ├── docs/                       # Documentos de las Etapas 1 y 2               · Logan
 ├── .github/
-│   ├── CODEOWNERS              # Dueño + revisor automático por archivo       · Los 4
 │   ├── workflows/pruebas.yml   # CI: npm test en cada PR y push a dev/main     · Los 4
 │   ├── copilot-instructions.md # Instrucciones para GitHub Copilot           · Los 4
 │   └── pull_request_template.md
@@ -368,7 +367,7 @@ Por decisión del equipo, `main` y `dev` **no tienen protección**: cualquiera p
 - `git pull --rebase` antes de cada push.
 - **Nunca** `--force`.
 
-El CI marca ✔ o ✘ en cada commit. [`CODEOWNERS`](.github/CODEOWNERS) asigna revisores solo si alguien abre un PR, que es opcional.
+Nadie aprueba los cambios de otro: cada uno responde por lo que sube. El CI marca ✔ o ✘ en cada commit.
 
 Comandos completos, convención de commits, orden de integración y resolución de conflictos en **[CONTRIBUTING.md](CONTRIBUTING.md)**.
 
@@ -376,14 +375,14 @@ Comandos completos, convención de commits, orden de integración y resolución 
 
 Resumen por entregable. El detalle por persona y prioridad está en [AUDITORIA.md §5](AUDITORIA.md#5-tareas-por-integrante-en-orden-de-prioridad).
 
-- [x] **Repositorio:** rama `dev` como rama de trabajo, `CODEOWNERS` en pares, CI y auditoría inicial (PR #2).
+- [x] **Repositorio:** rama `dev` como rama de trabajo, CI y auditoría inicial (PR #2).
 - [ ] **Los 4:** cerrar los hallazgos 🔴 de [AUDITORIA.md](AUDITORIA.md) (A-01, A-04, A-05).
 - [ ] **Gianni:** funciones de `mathEngine.js` → casos A–E en **OK**.
 - [ ] **Maximiliano:** `validator.js` + casos borde (grupo X) → `npm test` y `tests/test.html` operativos.
 - [ ] **Logan:** textos de `content.js` (contexto, fórmulas, supuestos, referencias APA).
 - [ ] **Camilo:** controles sincronizados, tarjetas, tabla mensual/anual y gráfico de dos curvas.
 - [ ] **Camilo + Maximiliano:** verificar ambas curvas contra GeoGebra (Caso D).
-- [ ] **Los 4:** revisión cruzada, pasar `dev` a `main`, etiqueta `v1.0.0` y publicación en GitHub Pages.
+- [ ] **Los 4:** prueba cruzada (cada uno ejecuta y explica el producto completo), pasar `dev` a `main`, etiqueta `v1.0.0` y publicación en GitHub Pages.
 
 ## 9. Referencias
 

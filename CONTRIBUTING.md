@@ -1,6 +1,6 @@
 # Guía de contribución: flujo de trabajo Git
 
-Cuatro personas trabajan en paralelo **sobre la misma rama `dev`, con push directo**. No se pisan porque **cada una es dueña exclusiva de sus archivos** (ver [README §5](README.md#5-equipo-y-responsabilidades)).
+Cuatro personas trabajan en paralelo **sobre la misma rama `dev`, con push directo y sin aprobaciones**. No se pisan porque **cada una es dueña exclusiva de sus archivos** (ver [README §5](README.md#5-equipo-y-responsabilidades)), y cada una responde por lo que sube.
 
 Los comandos funcionan igual en Git Bash, PowerShell, macOS y Linux.
 
@@ -21,7 +21,7 @@ main  ← solo versiones estables (entregas). Se actualiza desde dev al cerrar u
 
 `AUDITORIA.md` lo actualizan todos en el commit de su propio cambio (§8).
 
-> **Decisión del equipo (2026-11-20):** `main` y `dev` **no tienen protección** en GitHub, para que cada uno pueda hacer push directo sin PR ni aprobaciones ([AUDITORIA.md · A-24](AUDITORIA.md)). Por eso las [reglas de oro](#reglas-de-oro) son la única protección del repositorio: respétalas siempre.
+> **Decisión del equipo (2026-11-20):** `main` y `dev` **no tienen protección** en GitHub y **nadie aprueba los cambios de otro**: cada uno hace push directo, sin PR ni revisores ([AUDITORIA.md · A-24](AUDITORIA.md)). Por eso las [reglas de oro](#reglas-de-oro) son la única protección del repositorio: respétalas siempre.
 
 ---
 
@@ -77,23 +77,13 @@ git push origin dev
 
 Ejemplos: `feat(chart): dibujar curvas sin aportes y con aportes`, `test(qa): agregar casos borde con tasa 0 %`, `docs(content): agregar referencias APA`.
 
-## 3. Revisión y CI
+## 3. CI y responsabilidad
 
-Como no hay PR obligatorio, **la revisión es posterior**. Cada integrante revisa en GitHub los commits de la persona que le toca, al menos una vez por semana o cuando le avisen que subieron algo importante. Para ver los cambios de alguien: pestaña *Commits* de la rama `dev`, o `git log --author="Nombre" -p origin/dev`.
-
-### Quién revisa
-
-| Revisa | Los cambios de | Qué mira |
-|---|---|---|
-| Maximiliano | Gianni (`mathEngine.js`) | Casos A–E en OK, fórmulas iguales a las del README |
-| Gianni | Maximiliano (`validator.js`, `tests/`) | Que los casos llamen bien a las funciones del motor |
-| Camilo | Logan (`content.js`, documentación) | Que las claves de `content.js` coincidan con los `data-content` del HTML |
-| Logan | Camilo (interfaz y gráfico) | Textos, accesibilidad y que los resultados coincidan con los casos |
-
-Los comentarios se dejan en el commit en GitHub (botón de comentario en cada línea) o por el grupo del equipo.
+**Nadie aprueba ni revisa los cambios de otro.** Cada uno es responsable de que lo que sube funcione y de no tocar archivos ajenos.
 
 - **CI:** GitHub Actions corre `npm test` en cada push a `dev` y `main`, y marca ✔ o ✘ junto al commit. No bloquea el push: **si ves ✘ en tu commit, arréglalo antes de seguir con otra cosa.**
-- **PR opcional:** si un cambio es grande o riesgoso, puedes subirlo a una rama propia y abrir un PR hacia `dev` para que te revisen antes. [`CODEOWNERS`](.github/CODEOWNERS) pide la revisión automáticamente al dueño y al revisor de cada archivo.
+- **Si algo de otra persona te rompe tu parte:** avísale por el grupo del equipo. No edites su archivo.
+- **Para ver qué subió alguien:** pestaña *Commits* de la rama `dev`, o `git log --author="Nombre" -p origin/dev`.
 
 ## 4. Orden de integración sugerido
 
@@ -106,16 +96,16 @@ Prefiere **commits pequeños y frecuentes** (1–3 funciones) a un commit gigant
 
 ## 5. Cambiar un contrato (excepcional)
 
-`js/contracts.js` y la firma de las funciones exportadas son el acuerdo entre los 4. Si necesitas cambiarlos, **no lo subas directo**: avisa al grupo y abre un PR para que todos vean el cambio.
+`js/contracts.js` y la firma de las funciones exportadas son el acuerdo entre los 4: si cambian, se rompe el trabajo de los demás. Por eso, **avisa al grupo antes de cambiarlos**. Después súbelo como cualquier otro cambio:
 
 ```bash
 git switch dev && git pull --rebase origin dev
-git switch -c chore/contracts-<cambio>
 # editar js/contracts.js (y solo lo mínimo)
 git add js/contracts.js
 git commit -m "chore(contracts): agregar campo <x> a ResumenSimulacion"
-git push -u origin chore/contracts-<cambio>
-# PR a dev → esperar el OK de los 4 → merge → todos hacen "git pull --rebase origin dev"
+git pull --rebase origin dev
+git push origin dev
+# avisar al grupo que ya está, para que todos hagan "git pull --rebase origin dev"
 ```
 
 Si necesitas un cambio en un archivo **de otra persona**, pídeselo o abre un *Issue*. No lo edites tú.
@@ -159,7 +149,7 @@ git push origin dev
   - Marcan con `[x]` sus tareas terminadas y agregan la fecha.
   - Cierran o agregan hallazgos.
   - Dejan una línea en el Registro.
-- **README:** si tu cambio modifica un comportamiento, un contrato, un comando o la Hoja de ruta, actualízalo en el mismo commit. El dueño (Logan) lo revisa después.
+- **README:** si tu cambio modifica un comportamiento, un contrato, un comando o la Hoja de ruta, actualízalo en el mismo commit y avísale a Logan, que es el dueño.
 - **Asistentes de IA** (Claude, Copilot, ChatGPT, Gemini, Cursor…): las reglas están en [`AGENTS.md`](AGENTS.md).
   - Claude Code y Gemini lo cargan solos gracias a `CLAUDE.md` y `GEMINI.md`.
   - Copilot usa `.github/copilot-instructions.md`.
