@@ -23,7 +23,9 @@
 /GEMINI.md                @LSJ-tech @digicamilo-lgtm @gntonietti89-code @true-max-02
 
 # Gianni Antonietti (feat/math-engine) · revisa Maximiliano
-/js/mathEngine.js         @gntonietti89-code @true-max-02
+# TEMPORAL: @LSJ-tech es revisor de respaldo mientras Maximiliano no acepte la invitación
+# (AUDITORIA.md · A-01). Sin esto, los PR del motor quedarían bloqueados. Quitarlo cuando acepte.
+/js/mathEngine.js         @gntonietti89-code @true-max-02 @LSJ-tech
 
 # Camilo Sepúlveda (feat/ui-charts) · revisa Logan
 /index.html               @digicamilo-lgtm @LSJ-tech

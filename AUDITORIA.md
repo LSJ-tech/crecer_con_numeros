@@ -88,7 +88,10 @@ El andamiaje está bien diseñado: contratos claros, módulos que no se pisan y 
 ### A-01 · Maximiliano no tiene acceso al repositorio 🔴
 
 - **Evidencia:** la invitación a `true-max-02` (permiso *write*) sigue pendiente desde el 2026-11-16. Mientras no la acepte, no puede hacer push y GitHub ignora su usuario en `CODEOWNERS`.
-- **Solución:** Maximiliano acepta en <https://github.com/LSJ-tech/crecer_con_numeros/invitations> o desde el correo de GitHub. Las invitaciones vencen a los 7 días. Si vence, Logan la reenvía en *Settings → Collaborators*.
+- **Efecto en `CODEOWNERS`:** GitHub marca `@true-max-02` como *Unknown owner* en las 11 líneas donde aparece. Para no bloquear la ruta crítica, `@LSJ-tech` quedó como revisor **temporal** de `js/mathEngine.js`.
+- **Solución:**
+  1. Maximiliano acepta en <https://github.com/LSJ-tech/crecer_con_numeros/invitations> o desde el correo de GitHub. Las invitaciones vencen a los 7 días; si vence, Logan la reenvía en *Settings → Collaborators*.
+  2. Cuando acepte, quitar `@LSJ-tech` de la línea de `js/mathEngine.js` en `CODEOWNERS` (PR `chore/*`) y marcar este hallazgo como resuelto.
 
 ### A-02 · Ramas y protección 🔴 · ✅
 
