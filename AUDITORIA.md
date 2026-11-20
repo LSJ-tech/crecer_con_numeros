@@ -17,7 +17,7 @@
 | | |
 |---|---|
 | **Auditoría inicial** | 2026-11-20 · Logan Silva con Claude (Opus 5.5) |
-| **Última actualización** | 2026-11-20 · documentos de `docs/` alineados entre sí y con el producto (A-04, A-05, A-18, A-25) |
+| **Última actualización** | 2026-11-20 · GitHub Pages, `content.js`, institución y ramas viejas (A-13, A-19, A-20, A-22) |
 | **Versión auditada** | `v0.1.0` (andamiaje, commit `c03f153`) |
 | **Alcance** | Código (`js/`, `index.html`, `css/`), pruebas (`tests/`), configuración, documentos de `docs/` (Etapas 1 y 2 y presentación) y configuración del repositorio en GitHub |
 
@@ -220,9 +220,8 @@ Comprobado en Node 22 con `es-CL`:
   - `Tabla_Etapa_1_Final_v14.docx`
   - `Tabla_Etapa_2_v5.docx`
   - `Presentacion_Crecer_con_numeros.pptx`
-- **Falta:**
-  - Acordar una licencia y agregar `LICENSE` (el README sugiere MIT).
-  - Borrar las ramas ya integradas con `git push origin --delete chore/scaffolding chore/auditoria-gobernanza`.
+- **Hecho (2026-11-20):** se borraron las ramas `chore/scaffolding` y `chore/auditoria-gobernanza`. Antes se comprobó que su contenido ya estaba en `dev`; el único commit que no era ancestro (`fe92fa6`) ya se había aplicado como `8fc2f04`. En GitHub solo quedan `dev` y `main`.
+- **Falta:** acordar una licencia con el grupo y agregar `LICENSE` (el README sugiere MIT).
 
 ### A-21 · Correos en commits públicos 🟡 (opcional)
 
@@ -346,7 +345,8 @@ Puede empezar **ya** con HTML y CSS. Conecta `simular()` cuando el motor esté e
   - Contexto, ayudas de parámetros y notas de las tarjetas (A-09).
   - Modelos, supuestos y referencias.
 - [x] **P2** · Corregir las citas APA en el README y en la Etapa 2 (A-18). ✅ 2026-11-20
-- [ ] **P3** · Agregar `LICENSE` y borrar las ramas `chore/*` ya integradas (A-20). Los archivos de `docs/` ya se renombraron.
+- [x] **P3** · Borrar las ramas `chore/*` ya integradas (A-20). ✅ 2026-11-20
+- [ ] **P3** · Acordar la licencia con el grupo y agregar `LICENSE` (A-20). Los archivos de `docs/` ya se renombraron.
 - [x] **P3** · Activar GitHub Pages y poner el enlace en el README (A-13). ✅ 2026-11-20
 - [x] **P3** · Confirmar la institución en el README (A-19): INACAP. ✅ 2026-11-20
 
@@ -409,3 +409,4 @@ Otros datos de la Etapa 2 también verificados: los incrementos entre intervalos
 | 2026-11-20 | Logan Silva + Claude (Opus 5.5) | Documentos de `docs/` alineados entre sí y con el producto. Presentación rehecha en contenido con el mismo diseño: gráficos con los casos A y D, cronograma de la bitácora, notación y fórmulas de la Etapa 2 y las 7 referencias (A-04). Etapa 2: frase de los $6.000.000 (A-05), citas 2022a/b (A-18) y cursiva válida (A-25). Etapa 1: la propuesta nombra las dos curvas y la tasa para duplicar. README cita en el texto a Levin, Lippman (2022a) y Olivier (2022b). Archivos renombrados sin « (1)» (A-20 parcial). | push a `dev` |
 | 2026-11-20 | Logan Silva + Claude (Opus 5.5) | GitHub Pages activado desde `main` / `(root)`: <https://lsj-tech.github.io/crecer_con_numeros/> (A-13 resuelto). Enlace en el README (encabezado y §6); A-19 queda solo con la institución. | push a `dev` |
 | 2026-11-20 | Logan Silva + Claude (Opus 5.5) | `content.js` completo: `obtenerTexto()` implementado y los 14 textos y 6 listas llenos desde el README y la Etapa 2, incluidas las notas «Escenario sin aportes» de las tarjetas de duplicación y de tasa. Verificado en Node: todas las claves del HTML tienen texto, y las referencias y los supuestos son idénticos al README. A-22 resuelto; A-09 parcial (falta la parte de Camilo). Institución confirmada: INACAP, en el README y en el pie (A-19 resuelto). | push a `dev` |
+| 2026-11-20 | Logan Silva + Claude (Opus 5.5) | Se borran las ramas remotas `chore/scaffolding` y `chore/auditoria-gobernanza`, ya integradas en `dev` (comprobado antes de borrar). Solo quedan `dev` y `main`. A-20 queda solo con `LICENSE`. | push a `dev` |
