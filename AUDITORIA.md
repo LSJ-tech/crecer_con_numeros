@@ -70,7 +70,7 @@ El andamiaje está bien diseñado: contratos claros, módulos que no se pisan y 
 | A-06 | 🟠 | QA | `npm test` termina en verde aunque el validador no exista | Maximiliano | Pendiente |
 | A-07 | 🟠 | QA | El caso borde X3 (`Infinity`) nunca puede pasar con el contrato actual | Maximiliano | Pendiente |
 | A-08 | 🟠 | QA | El patrón sugerido para X5 convierte un PENDIENTE en FALLA | Maximiliano | Pendiente |
-| A-09 | 🟠 | UX | Las tarjetas de duplicación y de tasa no cambian al mover el aporte `M` | Logan + Camilo | Pendiente |
+| A-09 | 🟠 | UX | Las tarjetas de duplicación y de tasa no cambian al mover el aporte `M` | Logan + Camilo | 🟨 Parcial |
 | A-10 | 🟠 | Accesibilidad | `aria-live` sobre toda la sección de resultados | Camilo | Pendiente |
 | A-11 | 🟠 | Seguridad | Chart.js se carga desde el CDN sin `integrity` (SRI) | Camilo | Pendiente |
 | A-12 | 🟠 | Repo | No había CI que corriera las pruebas | Los 4 | ✅ Resuelto · 2026-11-20 · PR #2 |
@@ -80,10 +80,10 @@ El andamiaje está bien diseñado: contratos claros, módulos que no se pisan y 
 | A-16 | 🟡 | UI | El slider de capital tiene 10.000 posiciones y le falta `aria-valuetext` | Camilo | Pendiente |
 | A-17 | 🟡 | UI | Los colores del gráfico no cambian si el sistema cambia de tema | Camilo | Pendiente |
 | A-18 | 🟡 | Docs | Citas APA: referencias sin cita en el texto y años sin a/b | Logan | ✅ Resuelto · 2026-11-20 |
-| A-19 | 🟡 | Docs | `TODO` del README: curso, institución, docente y enlace | Logan | 🟨 Parcial |
+| A-19 | 🟡 | Docs | `TODO` del README: curso, institución, docente y enlace | Logan | ✅ Resuelto · 2026-11-20 |
 | A-20 | 🟡 | Repo | Nombres `(1)` en `docs/`, falta `LICENSE` y no se borró la rama `chore/scaffolding` | Logan | 🟨 Parcial |
 | A-21 | 🟡 | Privacidad | Repo público con correos institucionales en los commits | Cada integrante | Pendiente (opcional) |
-| A-22 | 🟡 | Contenido | `content.js`: 14 textos y 6 listas vacías | Logan | Pendiente |
+| A-22 | 🟡 | Contenido | `content.js`: 14 textos y 6 listas vacías | Logan | ✅ Resuelto · 2026-11-20 |
 | A-23 | 🟠 | Motor | `mathEngine.js` sin implementar (14 funciones): es la ruta crítica | Gianni | Pendiente |
 | A-24 | 🟠 | Repo | `main` y `dev` sin protección: cualquiera puede subir a `main` o hacer force-push | Los 4 | ⚠️ Riesgo aceptado · 2026-11-20 |
 | A-25 | 🟡 | Docs | Etapa 2: la cursiva de las fuentes estaba guardada con un formato inválido de Word | Logan | ✅ Resuelto · 2026-11-20 |
@@ -146,10 +146,12 @@ El andamiaje está bien diseñado: contratos claros, módulos que no se pisan y 
   calcular: (m) => { try { m.simular({ P, r: R, M: 0, t: 0 }); return 0; } catch (e) { if (e instanceof RangeError) return 1; throw e; } }
   ```
 
-### A-09 · Tarjetas que ignoran el aporte mensual 🟠
+### A-09 · Tarjetas que ignoran el aporte mensual 🟠 · 🟨 Parcial
 
 - **Evidencia:** `tiempoDuplicacion` y `tasaParaDuplicar` son del escenario **sin aportes** (Etapa 2, respuestas 1 y 3). Al mover el slider de `M`, esas tarjetas no cambian y la persona puede creer que es un error.
 - **Solución:** Logan escribe `resultados.duplicacion.nota` y `resultados.tasaRequerida.nota` en `content.js` aclarando «Escenario sin aportes: no depende del aporte mensual». Camilo evalúa agregar «(sin aportes)» en el título de la tarjeta.
+- **Hecho (2026-11-20):** las dos notas ya están en `content.js` y empiezan con «Escenario sin aportes: depende solo de la tasa / del plazo, no del capital ni del aporte mensual».
+- **Falta (Camilo):** que `renderizarContenido` muestre las notas y decidir si el título lleva «(sin aportes)».
 
 ### A-10 · `aria-live` sobre toda la sección de resultados 🟠
 
@@ -204,13 +206,13 @@ Comprobado en Node 22 con `es-CL`:
   - La Etapa 2 usa 2022a/2022b en el texto y en las fuentes (Lippman 2022a = 9.03 y 2022b = 9.09; Olivier 2022a = 9.05 y 2022b = 11.02).
   - El libro de Levin va en tipo oración: *Matemáticas discretas*.
   - La presentación trae las mismas 7 referencias.
-- **Pendiente para Logan:** mantener `content.js` (`referencias.lista`) igual al README §9 cuando se complete (A-22).
+- **Hecho (2026-11-20):** `content.js` (`referencias.lista`) tiene las mismas 10 referencias del README §9 (las 7 fuentes y las 3 herramientas), comprobado texto por texto. Si cambia una, se cambia en ambos lados.
 
-### A-19 · `TODO` del README 🟡 · 🟨 Parcial
+### A-19 · `TODO` del README 🟡 · ✅
 
 - **Hecho (PR #2):** se agregaron la carrera (Ingeniería en Informática), la asignatura (MVFM01) y la docente (Giselle Mora Ocares), tomados de la portada de la presentación.
 - **Hecho (2026-11-20):** se agregó el enlace a GitHub Pages (A-13).
-- **Falta:** confirmar la institución.
+- **Resuelto (2026-11-20):** Logan confirmó que la institución es INACAP. Está en el README y en el pie de la página (`content.js` → `sitio.pie`), y ya no queda el `TODO`.
 
 ### A-20 · Orden del repositorio 🟡 · 🟨 Parcial
 
@@ -234,6 +236,11 @@ Comprobado en Node 22 con `es-CL`:
   - Listas vacías: `contexto.datos`, `modelos.*.formulas`, `supuestos.lista` y `referencias.lista`.
   - Además, `obtenerTexto()` devuelve siempre `undefined`.
 - Todas las claves `data-content` del HTML existen en `content.js`. `grafico.ejeX`, `ejeY` y `serie*` no se usan en el HTML porque llegan a `chartManager` a través de `CONTENIDO.grafico`, así que es correcto.
+- **Resuelto (2026-11-20):**
+  - `obtenerTexto()` recorre la ruta con puntos y devuelve `undefined` si la clave no existe, está vacía o apunta a un grupo. Usa `Object.hasOwn`, así que rutas como `constructor` o `__proto__` no devuelven nada heredado.
+  - Están llenos los 14 textos y las 6 listas: contexto, ayudas, notas, modelos, gráfico, GeoGebra, supuestos y referencias. Los textos salen del README §2, §3 y §9 y de la Etapa 2, con las mismas cifras y la frase corregida de los $7.000.000 (A-05).
+  - Se comprobó con un script en Node: las 50 claves `data-content` y las 6 `data-content-lista` del HTML devuelven texto, no hay HTML en los textos, las referencias y los supuestos son idénticos a los del README, y las cifras citadas coinciden con las fórmulas.
+  - `sitio.pie` incluye la institución, INACAP (A-19).
 
 ### A-23 · Motor matemático sin implementar (ruta crítica) 🟠
 
@@ -332,16 +339,16 @@ Puede empezar **ya** con HTML y CSS. Conecta `simular()` cuando el motor esté e
 - [x] **P1** · Crear `dev` como rama de trabajo y configurar el CI (A-02, A-12). ✅ 2026-11-20
 - [ ] **P1** · Trabajar en `dev` con `git pull --rebase` antes de cada push (CONTRIBUTING §2).
 - [ ] **P1** · Confirmar que Maximiliano aceptó la invitación y reenviarla si venció (A-01).
-- [ ] **P1** · Implementar `obtenerTexto()` en `content.js` (A-22).
+- [x] **P1** · Implementar `obtenerTexto()` en `content.js` (A-22). ✅ 2026-11-20
 - [ ] **P1** · Avisar al equipo de la frase correcta de los $6.000.000 para el video y la defensa (A-05).
 - [x] **P2** · Alinear la presentación y las Tablas de las Etapas 1 y 2 con el producto (A-04, A-05, A-25). ✅ 2026-11-20
-- [ ] **P2** · Completar los textos de `content.js` (A-22):
+- [x] **P2** · Completar los textos de `content.js` (A-22): ✅ 2026-11-20
   - Contexto, ayudas de parámetros y notas de las tarjetas (A-09).
   - Modelos, supuestos y referencias.
 - [x] **P2** · Corregir las citas APA en el README y en la Etapa 2 (A-18). ✅ 2026-11-20
 - [ ] **P3** · Agregar `LICENSE` y borrar las ramas `chore/*` ya integradas (A-20). Los archivos de `docs/` ya se renombraron.
 - [x] **P3** · Activar GitHub Pages y poner el enlace en el README (A-13). ✅ 2026-11-20
-- [ ] **P3** · Confirmar la institución en el README (A-19).
+- [x] **P3** · Confirmar la institución en el README (A-19): INACAP. ✅ 2026-11-20
 
 ### Los 4
 
@@ -401,3 +408,4 @@ Otros datos de la Etapa 2 también verificados: los incrementos entre intervalos
 | 2026-11-20 | Logan Silva + Claude (Opus 5.5) | Nadie aprueba ni revisa los cambios de otro: se elimina `.github/CODEOWNERS` (A-03 descartado), junto con la tabla «Quién revisa» y las tareas de revisión. Los cambios a `contracts.js` solo requieren avisar al grupo antes. | push a `dev` |
 | 2026-11-20 | Logan Silva + Claude (Opus 5.5) | Documentos de `docs/` alineados entre sí y con el producto. Presentación rehecha en contenido con el mismo diseño: gráficos con los casos A y D, cronograma de la bitácora, notación y fórmulas de la Etapa 2 y las 7 referencias (A-04). Etapa 2: frase de los $6.000.000 (A-05), citas 2022a/b (A-18) y cursiva válida (A-25). Etapa 1: la propuesta nombra las dos curvas y la tasa para duplicar. README cita en el texto a Levin, Lippman (2022a) y Olivier (2022b). Archivos renombrados sin « (1)» (A-20 parcial). | push a `dev` |
 | 2026-11-20 | Logan Silva + Claude (Opus 5.5) | GitHub Pages activado desde `main` / `(root)`: <https://lsj-tech.github.io/crecer_con_numeros/> (A-13 resuelto). Enlace en el README (encabezado y §6); A-19 queda solo con la institución. | push a `dev` |
+| 2026-11-20 | Logan Silva + Claude (Opus 5.5) | `content.js` completo: `obtenerTexto()` implementado y los 14 textos y 6 listas llenos desde el README y la Etapa 2, incluidas las notas «Escenario sin aportes» de las tarjetas de duplicación y de tasa. Verificado en Node: todas las claves del HTML tienen texto, y las referencias y los supuestos son idénticos al README. A-22 resuelto; A-09 parcial (falta la parte de Camilo). Institución confirmada: INACAP, en el README y en el pie (A-19 resuelto). | push a `dev` |

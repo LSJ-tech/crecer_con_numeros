@@ -15,8 +15,7 @@
 >
 > **Sitio publicado:** **<https://lsj-tech.github.io/crecer_con_numeros/>**. Muestra lo que hay en `main`, que solo cambia en las entregas; mientras tanto se ve el andamiaje, sin cálculos (ver §6).
 
-Proyecto de la asignatura **MVFM01**, Ingeniería en Informática, con la docente **Giselle Mora Ocares**.
-<!-- TODO: [Logan Silva] Confirmar la institución (AUDITORIA.md · A-19). -->
+Proyecto de la asignatura **MVFM01** de Ingeniería en Informática en **INACAP**, con la docente **Giselle Mora Ocares**.
 
 ## Tabla de contenidos
 
@@ -384,7 +383,7 @@ Resumen por entregable. El detalle por persona y prioridad está en [AUDITORIA.m
 - [ ] **Los 4:** cerrar los hallazgos 🔴 de [AUDITORIA.md](AUDITORIA.md) (A-01, A-04, A-05).
 - [ ] **Gianni:** funciones de `mathEngine.js` → casos A–E en **OK**.
 - [ ] **Maximiliano:** `validator.js` + casos borde (grupo X) → `npm test` y `tests/test.html` operativos.
-- [ ] **Logan:** textos de `content.js` (contexto, fórmulas, supuestos, referencias APA).
+- [x] **Logan:** textos de `content.js` (contexto, fórmulas, supuestos, referencias APA) y `obtenerTexto()`.
 - [ ] **Camilo:** controles sincronizados, tarjetas, tabla mensual/anual y gráfico de dos curvas.
 - [ ] **Camilo + Maximiliano:** verificar ambas curvas contra GeoGebra (Caso D).
 - [ ] **Los 4:** prueba cruzada (cada uno ejecuta y explica el producto completo), pasar `dev` a `main`, etiqueta `v1.0.0` y publicación en GitHub Pages.
