@@ -12,9 +12,11 @@
 > **Estado:** 🚧 andamiaje inicial (`v0.1.0`). Los módulos contienen contratos, JSDoc y `TODO` por responsable; la lógica todavía no está implementada.
 >
 > **Auditoría y tareas:** el estado del proyecto, los hallazgos abiertos y las tareas de cada integrante por prioridad están en **[AUDITORIA.md](AUDITORIA.md)**.
+>
+> **Sitio publicado:** **<https://lsj-tech.github.io/crecer_con_numeros/>**. Muestra lo que hay en `main`, que solo cambia en las entregas; mientras tanto se ve el andamiaje, sin cálculos (ver §6).
 
 Proyecto de la asignatura **MVFM01**, Ingeniería en Informática, con la docente **Giselle Mora Ocares**.
-<!-- TODO: [Logan Silva] Confirmar la institución y agregar el enlace a GitHub Pages cuando exista (AUDITORIA.md · A-13, A-19). -->
+<!-- TODO: [Logan Silva] Confirmar la institución (AUDITORIA.md · A-19). -->
 
 ## Tabla de contenidos
 
@@ -340,7 +342,10 @@ Cada caso termina en **OK**, **FALLA**, **PENDIENTE** (función aún sin impleme
 
 ### Publicar (GitHub Pages)
 
-*Settings → Pages → Deploy from a branch → `main` / `(root)`*. La calculadora queda disponible en `https://lsj-tech.github.io/crecer_con_numeros/` sin ningún paso de compilación.
+Activado el 2026-11-20 desde *Settings → Pages → Deploy from a branch → `main` / `(root)`*. La calculadora está en **<https://lsj-tech.github.io/crecer_con_numeros/>** y no necesita ningún paso de compilación.
+
+- **Qué se publica:** solo `main`. Cada vez que se pasa `dev` a `main` (CONTRIBUTING §6), GitHub vuelve a publicar solo, en 1 o 2 minutos. Los push a `dev` **no** cambian el sitio.
+- **Para ver tu avance antes de la entrega:** ábrelo en tu equipo con cualquiera de las opciones de la tabla de arriba (Live Server, Python o Node).
 
 ## 7. Flujo de trabajo Git
 

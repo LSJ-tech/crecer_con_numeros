@@ -74,7 +74,7 @@ El andamiaje está bien diseñado: contratos claros, módulos que no se pisan y 
 | A-10 | 🟠 | Accesibilidad | `aria-live` sobre toda la sección de resultados | Camilo | Pendiente |
 | A-11 | 🟠 | Seguridad | Chart.js se carga desde el CDN sin `integrity` (SRI) | Camilo | Pendiente |
 | A-12 | 🟠 | Repo | No había CI que corriera las pruebas | Los 4 | ✅ Resuelto · 2026-11-20 · PR #2 |
-| A-13 | 🟠 | Repo | GitHub Pages no está activado (el README promete la URL) | Logan | Pendiente |
+| A-13 | 🟠 | Repo | GitHub Pages no está activado (el README promete la URL) | Logan | ✅ Resuelto · 2026-11-20 |
 | A-14 | 🟡 | UI | Detalles de `Intl.NumberFormat` en los formateadores | Camilo | Pendiente |
 | A-15 | 🟡 | UI | La tabla mensual llega a 481 filas con 40 años | Camilo | Pendiente |
 | A-16 | 🟡 | UI | El slider de capital tiene 10.000 posiciones y le falta `aria-valuetext` | Camilo | Pendiente |
@@ -165,9 +165,11 @@ El andamiaje está bien diseñado: contratos claros, módulos que no se pisan y 
 
 - **Solución aplicada:** `.github/workflows/pruebas.yml` corre `npm test` en cada push a `dev` y `main` (y en los PR opcionales), y marca ✔ o ✘ junto a cada commit. No bloquea el push, porque no hay protección (A-24): quien vea ✘ en su commit lo arregla de inmediato. Solo es útil de verdad cuando se cierre A-06.
 
-### A-13 · GitHub Pages no activado 🟠
+### A-13 · GitHub Pages no activado 🟠 · ✅
 
-- **Solución:** cuando `main` tenga la primera versión funcional, activar *Settings → Pages → Deploy from a branch → `main` / `(root)`* y agregar el enlace al README (A-19).
+- **Solución propuesta:** activar *Settings → Pages → Deploy from a branch → `main` / `(root)`* y agregar el enlace al README (A-19).
+- **Resuelto (2026-11-20):** el sitio está publicado desde `main` / `(root)` en <https://lsj-tech.github.io/crecer_con_numeros/>, con HTTPS obligatorio. Se comprobó que la página, `css/styles.css` y `js/main.js` responden con 200. El enlace está en el README (encabezado y §6).
+- **Ojo:** `main` todavía tiene el andamiaje, así que el sitio carga pero no calcula. Se actualiza solo cuando se pase `dev` a `main` en la entrega (tarea de los 4 en §5).
 
 ### A-14 · Detalles de formato con `Intl` 🟡
 
@@ -207,7 +209,8 @@ Comprobado en Node 22 con `es-CL`:
 ### A-19 · `TODO` del README 🟡 · 🟨 Parcial
 
 - **Hecho (PR #2):** se agregaron la carrera (Ingeniería en Informática), la asignatura (MVFM01) y la docente (Giselle Mora Ocares), tomados de la portada de la presentación.
-- **Falta:** confirmar la institución y agregar el enlace a GitHub Pages (A-13).
+- **Hecho (2026-11-20):** se agregó el enlace a GitHub Pages (A-13).
+- **Falta:** confirmar la institución.
 
 ### A-20 · Orden del repositorio 🟡 · 🟨 Parcial
 
@@ -337,7 +340,8 @@ Puede empezar **ya** con HTML y CSS. Conecta `simular()` cuando el motor esté e
   - Modelos, supuestos y referencias.
 - [x] **P2** · Corregir las citas APA en el README y en la Etapa 2 (A-18). ✅ 2026-11-20
 - [ ] **P3** · Agregar `LICENSE` y borrar las ramas `chore/*` ya integradas (A-20). Los archivos de `docs/` ya se renombraron.
-- [ ] **P3** · Activar GitHub Pages y completar la institución y el enlace en el README (A-13, A-19).
+- [x] **P3** · Activar GitHub Pages y poner el enlace en el README (A-13). ✅ 2026-11-20
+- [ ] **P3** · Confirmar la institución en el README (A-19).
 
 ### Los 4
 
@@ -396,3 +400,4 @@ Otros datos de la Etapa 2 también verificados: los incrementos entre intervalos
 | 2026-11-20 | Logan Silva + Claude (Opus 5.5) | El equipo decide trabajar con push directo a `dev`, sin protección de ramas (A-24, riesgo aceptado). CONTRIBUTING, README, `AGENTS.md` y esta auditoría pasan al nuevo flujo (`git pull --rebase`, nunca `--force`). Se quita el revisor temporal del motor. | push a `dev` |
 | 2026-11-20 | Logan Silva + Claude (Opus 5.5) | Nadie aprueba ni revisa los cambios de otro: se elimina `.github/CODEOWNERS` (A-03 descartado), junto con la tabla «Quién revisa» y las tareas de revisión. Los cambios a `contracts.js` solo requieren avisar al grupo antes. | push a `dev` |
 | 2026-11-20 | Logan Silva + Claude (Opus 5.5) | Documentos de `docs/` alineados entre sí y con el producto. Presentación rehecha en contenido con el mismo diseño: gráficos con los casos A y D, cronograma de la bitácora, notación y fórmulas de la Etapa 2 y las 7 referencias (A-04). Etapa 2: frase de los $6.000.000 (A-05), citas 2022a/b (A-18) y cursiva válida (A-25). Etapa 1: la propuesta nombra las dos curvas y la tasa para duplicar. README cita en el texto a Levin, Lippman (2022a) y Olivier (2022b). Archivos renombrados sin « (1)» (A-20 parcial). | push a `dev` |
+| 2026-11-20 | Logan Silva + Claude (Opus 5.5) | GitHub Pages activado desde `main` / `(root)`: <https://lsj-tech.github.io/crecer_con_numeros/> (A-13 resuelto). Enlace en el README (encabezado y §6); A-19 queda solo con la institución. | push a `dev` |
