@@ -17,7 +17,7 @@
 | | |
 |---|---|
 | **Auditoría inicial** | 2026-11-20 · Logan Silva con Claude (Opus 5.5) |
-| **Última actualización** | 2026-11-20 · GitHub Pages, `content.js`, institución y ramas viejas (A-13, A-19, A-20, A-22) |
+| **Última actualización** | 2026-11-20 · primer análisis de SonarCloud: hash SRI verificado (A-11) y ARIA del gráfico y la tabla (A-26) |
 | **Versión auditada** | `v0.1.0` (andamiaje, commit `c03f153`) |
 | **Alcance** | Código (`js/`, `index.html`, `css/`), pruebas (`tests/`), configuración, documentos de `docs/` (Etapas 1 y 2 y presentación) y configuración del repositorio en GitHub |
 
@@ -42,7 +42,7 @@ Este archivo es **compartido**: cualquiera de los 4 lo actualiza en el commit de
 - **Si un hallazgo no aplica:** `⛔ Descartado · AAAA-MM-DD`, con la razón en una frase en el detalle (§4).
 - **Si el equipo decide no corregirlo:** `⚠️ Riesgo aceptado · AAAA-MM-DD`, con la decisión y cómo se mitiga en el detalle.
 - **Si queda a medias:** `🟨 Parcial`, con lo que falta en el detalle.
-- **Hallazgo nuevo:** usa el siguiente ID libre (`A-26`, `A-27`…). Agrégalo a la tabla de §3 y su detalle a §4, con **evidencia** (archivo y línea) y **solución propuesta**.
+- **Hallazgo nuevo:** usa el siguiente ID libre (`A-27`, `A-28`…). Agrégalo a la tabla de §3 y su detalle a §4, con **evidencia** (archivo y línea) y **solución propuesta**.
 - **Al terminar una tarea de §5:** márcala `- [x]` y agrega `✅ AAAA-MM-DD`. Marca solo tus propias tareas.
 - **Si dos personas editan este archivo al mismo tiempo:** al hacer `git pull --rebase`, el conflicto típico es en el Registro. Conserva **ambas** líneas.
 - **Siempre:** una línea en el [Registro](#8-registro-de-cambios).
@@ -87,6 +87,7 @@ El andamiaje está bien diseñado: contratos claros, módulos que no se pisan y 
 | A-23 | 🟠 | Motor | `mathEngine.js` sin implementar (14 funciones): es la ruta crítica | Gianni | Pendiente |
 | A-24 | 🟠 | Repo | `main` y `dev` sin protección: cualquiera puede subir a `main` o hacer force-push | Los 4 | ⚠️ Riesgo aceptado · 2026-11-20 |
 | A-25 | 🟡 | Docs | Etapa 2: la cursiva de las fuentes estaba guardada con un formato inválido de Word | Logan | ✅ Resuelto · 2026-11-20 |
+| A-26 | 🟡 | Accesibilidad | SonarCloud: el `canvas` del gráfico y el contenedor de la tabla usan atributos ARIA que marca como *code smell* | Camilo | Pendiente |
 
 ## 4. Detalle de cada hallazgo
 
@@ -160,8 +161,14 @@ El andamiaje está bien diseñado: contratos claros, módulos que no se pisan y 
 
 ### A-11 · Chart.js sin SRI 🟠
 
-- **Evidencia:** `index.html` carga `chart.js@4.4.1` desde jsDelivr con `crossorigin` pero sin `integrity` (ya hay un `TODO`).
-- **Solución:** copiar el hash SHA-384 oficial desde la página del paquete en jsDelivr y agregarlo como `integrity="sha384-…"`. No inventar el hash.
+- **Evidencia:** `index.html` carga `chart.js@4.4.1` desde jsDelivr con `crossorigin` pero sin `integrity` (ya hay un `TODO`). SonarCloud lo confirma: es la **única vulnerabilidad** del proyecto (`Web:S5725`, `index.html:16`) y por ella el código completo tiene nota B en seguridad.
+- **Solución:** reemplazar la línea 16 de `index.html` por esta (una línea, sin otros cambios):
+
+  ```html
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js" integrity="sha384-dug+JxfBvklEQdJ4AYuBBAIScUz0bVN73xpy273gcAwHjb3qI0fXmuYNaNfdyYJG" crossorigin="anonymous"></script>
+  ```
+
+- **Cómo se verificó el hash (2026-11-20):** el `chart.umd.js` del CDN es idéntico byte a byte al del paquete oficial de npm (`npm pack chart.js@4.4.1`), y su SHA-256 coincide con el que publica la API de jsDelivr. El SHA-384 se calculó sobre ese archivo. Si algún día se cambia la versión de Chart.js, hay que recalcular el hash.
 
 ### A-12 · Sin integración continua 🟠 · ✅
 
@@ -262,6 +269,22 @@ Comprobado en Node 22 con `es-CL`:
   - El CI marca ✘ en el commit que rompe las pruebas (A-12).
 - **Opción intermedia, si el equipo cambia de idea:** una regla de protección que **solo** bloquee el force-push y el borrado de `main` y `dev`. No exige PR ni aprobaciones, así que mantiene el push directo y elimina el riesgo más grave.
 
+### A-26 · SonarCloud: ARIA en el gráfico y la tabla 🟡
+
+Primer análisis de [SonarCloud](https://sonarcloud.io/project/overview?id=LSJ-tech_crecer_con_numeros) (2026-11-20, commit `2a9634b`): Quality Gate en verde, 0 bugs, 0 duplicación, 1 vulnerabilidad (A-11) y 65 *code smells*.
+
+- **Ruido esperado del andamiaje (no hay que hacer nada):**
+  - 49 avisos de `TODO` (`S1135`): son las tareas de cada uno y desaparecen al implementarlas.
+  - 12 imports sin usar en `main.js` y `uiController.js` (`S1128`): se usan cuando Camilo implemente esas funciones.
+  - No borrar `TODO` ni imports solo para bajar la cifra.
+- **Evidencia (lo que sí hay que decidir), todo en `index.html`, archivo de Camilo:**
+  - Línea 172, `<canvas … role="img" aria-label="…">`: `S6819` (pide `<img>` o `<svg>`) y `S6843` (rol no interactivo en un elemento interactivo).
+  - Línea 194, `<div class="tabla__scroll" role="region" … tabindex="0">`: `S6819` (pide `<section>`) y `S6845` (`tabindex` en un elemento no interactivo).
+- **Ojo:** el código actual sigue patrones accesibles reconocidos. La documentación de Chart.js recomienda `role="img"` con `aria-label` en el `canvas`, y una tabla con scroll horizontal necesita `tabindex="0"` para poder desplazarse con el teclado (WCAG 2.1.1). El arreglo no puede empeorar la accesibilidad solo para dejar contento a SonarCloud.
+- **Solución propuesta:**
+  - **Gráfico:** usar la otra forma que documenta Chart.js: quitar `role` y `aria-label` del `canvas` y poner dentro un texto alternativo, por ejemplo `<canvas id="grafico-saldos"><p>Gráfico de líneas del saldo mes a mes, sin aportes y con aportes. Los mismos valores están en la Tabla de valores.</p></canvas>`. El `figcaption` y la tabla ya entregan los datos.
+  - **Tabla:** cambiar el `div` con `role="region"` por `<section class="tabla__scroll" aria-labelledby="tabla-titulo" tabindex="0">`, lo que cierra `S6819`. El `tabindex="0"` se mantiene. Si SonarCloud sigue marcando `S6845`, Logan lo marca como *Accepted* en SonarCloud con la razón «contenedor con scroll: necesita foco de teclado (WCAG 2.1.1)». Es la única excepción justificada.
+
 ## 5. Tareas por integrante (en orden de prioridad)
 
 Cada integrante trabaja su lista **de arriba hacia abajo**. Cuando termina una tarea, la marca en el **mismo commit** en que la entrega: cambia `- [ ]` por `- [x]` y agrega al final `✅ AAAA-MM-DD`. GitHub muestra esas casillas como ✔. Si la tarea cierra un hallazgo, también se actualiza su estado en §3.
@@ -321,15 +344,16 @@ Su trabajo desbloquea a todos: conviene que suba la **entrega 1 lo antes posible
 Puede empezar **ya** con HTML y CSS. Conecta `simular()` cuando el motor esté en `dev`.
 
 - [ ] **P1** · Clonar el repo (o hacer `git pull`) y trabajar en `dev` (CONTRIBUTING §1).
+- [ ] **P1** · Pegar en `index.html:16` la línea con el `integrity` de Chart.js que está en A-11. Ya está verificada, son 2 minutos y cierra la única vulnerabilidad de SonarCloud.
 - [ ] **P1** · `styles.css`: tokens, layout, componentes, utilidades y responsive.
 - [ ] **P1** · `uiController.js`:
   - `renderizarContenido` (desbloquea los textos de Logan) y `mostrarError`.
   - Los formateadores (A-14).
   - `inicializarUI`, `leerParametros` y `establecerParametros`.
 - [ ] **P2** · `main.js`: `iniciar`, `recalcular`, `renderizarFilas` y `alCambiarModoTabla` (cuando `simular()` esté en `dev`).
-- [ ] **P2** · `chartManager.js`: `crearGrafico` y `actualizarGrafico`, con colores que respondan al tema (A-17) y el SRI de Chart.js (A-11).
+- [ ] **P2** · `chartManager.js`: `crearGrafico` y `actualizarGrafico`, con colores que respondan al tema (A-17).
 - [ ] **P2** · `renderizarTabla` y `renderizarResumen`, con la vista anual por defecto (A-15).
-- [ ] **P2** · Accesibilidad: anuncio con `aria-live` acotado (A-10) y `aria-valuetext` en los sliders (A-16).
+- [ ] **P2** · Accesibilidad: anuncio con `aria-live` acotado (A-10), `aria-valuetext` en los sliders (A-16), y el `canvas` y la tabla según SonarCloud (A-26).
 - [ ] **P3** · `generarComandosGeoGebra` y verificación de curvas con Maximiliano.
 - [ ] **P3** · Etiquetar «(sin aportes)» las tarjetas de duplicación y tasa (A-09, con Logan).
 
@@ -410,3 +434,4 @@ Otros datos de la Etapa 2 también verificados: los incrementos entre intervalos
 | 2026-11-20 | Logan Silva + Claude (Opus 5.5) | GitHub Pages activado desde `main` / `(root)`: <https://lsj-tech.github.io/crecer_con_numeros/> (A-13 resuelto). Enlace en el README (encabezado y §6); A-19 queda solo con la institución. | push a `dev` |
 | 2026-11-20 | Logan Silva + Claude (Opus 5.5) | `content.js` completo: `obtenerTexto()` implementado y los 14 textos y 6 listas llenos desde el README y la Etapa 2, incluidas las notas «Escenario sin aportes» de las tarjetas de duplicación y de tasa. Verificado en Node: todas las claves del HTML tienen texto, y las referencias y los supuestos son idénticos al README. A-22 resuelto; A-09 parcial (falta la parte de Camilo). Institución confirmada: INACAP, en el README y en el pie (A-19 resuelto). | push a `dev` |
 | 2026-11-20 | Logan Silva + Claude (Opus 5.5) | Se borran las ramas remotas `chore/scaffolding` y `chore/auditoria-gobernanza`, ya integradas en `dev` (comprobado antes de borrar). Solo quedan `dev` y `main`. A-20 queda solo con `LICENSE`. | push a `dev` |
+| 2026-11-20 | Logan Silva + Claude (Opus 5.5) | Primer análisis de SonarCloud: Quality Gate en verde, 1 vulnerabilidad y 65 *code smells* (61 son `TODO` e imports del andamiaje). A-11 queda con el hash SRI de Chart.js verificado contra npm y jsDelivr, y es tarea P1 de Camilo. Se agrega A-26 (ARIA del `canvas` y de la tabla). SonarCloud se suma al README §6 y a la revisión posterior al push de `AGENTS.md`. | push a `dev` |

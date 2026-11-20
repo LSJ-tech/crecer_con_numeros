@@ -16,4 +16,4 @@ Las reglas completas están en [`AGENTS.md`](../AGENTS.md), en la raíz del repo
   - Una línea en el Registro.
 - Actualiza también el `README.md` si cambia un comportamiento, un contrato o la Hoja de ruta.
 - `mathEngine.js` son funciones puras sin redondeo. Solo `uiController.js` formatea. Texto con `textContent`, nunca `innerHTML`. Sin dependencias npm.
-- Corre `npm test` antes del push, revisa que el CI quede en ✔ y no inventes datos, citas ni hashes.
+- Corre `npm test` antes del push, revisa que el CI quede en ✔ y que el Quality Gate de SonarCloud siga en verde, y no inventes datos, citas ni hashes.

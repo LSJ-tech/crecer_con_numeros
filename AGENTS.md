@@ -72,6 +72,7 @@ No borres hallazgos ni renumeres IDs.
 - `AUDITORIA.md` actualizado según §4.
 - `git pull --rebase origin dev` y después `git push origin dev`.
 - **Después del push:** revisa que el CI quede en ✔ (pestaña *Actions*, o `gh run list --branch dev --limit 1`). Si queda en ✘, arréglalo antes de seguir.
+- **SonarCloud:** el *Quality Gate* debe seguir en verde (`https://sonarcloud.io/api/qualitygates/project_status?projectKey=LSJ-tech_crecer_con_numeros`). Si tu cambio agrega un hallazgo, arréglalo en el código. No borres `TODO` ni imports solo para bajar la cifra, y no marques nada como aceptado sin que tu humano avise al grupo.
 
 ## 6. Comandos útiles
 

@@ -338,6 +338,7 @@ cd crecer_con_numeros
 Cada caso termina en **OK**, **FALLA**, **PENDIENTE** (función aún sin implementar) o **ERROR**.
 
 - **Integración continua:** GitHub Actions ([`.github/workflows/pruebas.yml`](.github/workflows/pruebas.yml)) corre `npm test` en cada push a `dev` y `main`, y marca ✔ o ✘ junto al commit. No bloquea el push: si ves ✘ en tu commit, arréglalo de inmediato.
+- **Calidad del código:** [SonarCloud](https://sonarcloud.io/project/overview?id=LSJ-tech_crecer_con_numeros) analiza automáticamente cada push a `dev`. El *Quality Gate* tiene que seguir en verde. Si tu cambio agrega un hallazgo, se arregla en el código: no se marca como aceptado sin avisar al grupo (AUDITORIA · A-26).
 
 ### Publicar (GitHub Pages)
 
