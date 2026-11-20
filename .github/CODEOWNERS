@@ -1,29 +1,44 @@
 # Dueños de cada archivo: GitHub pide su revisión automáticamente en cada PR.
-# TODO: reemplazar <usuario-...> por el usuario real de GitHub de cada integrante,
-#       quitar el "# " inicial de cada regla y activar "Require review from Code Owners"
-#       en Settings → Branches (rama dev y main).
+#
+# Cada regla lista al DUEÑO y a su REVISOR (tabla "Quién revisa" de CONTRIBUTING.md §3).
+# Por qué en pares: GitHub no cuenta la aprobación del autor de un PR. Si el autor
+# fuera el único dueño de un archivo, su PR quedaría bloqueado para siempre.
+#
+# Regla de GitHub: gana la ÚLTIMA línea que coincide con el archivo.
+# Con varios dueños en una línea, basta la aprobación de UNO de ellos.
+#
+# Logins: LSJ-tech = Logan · digicamilo-lgtm = Camilo
+#         gntonietti89-code = Gianni · true-max-02 = Maximiliano
 
-# Compartidos (congelados): cualquier cambio lo revisan los 4
-# /js/contracts.js            <usuario-gianni> <usuario-camilo> <usuario-maximiliano> <usuario-logan>
-# /.github/                   <usuario-gianni> <usuario-camilo> <usuario-maximiliano> <usuario-logan>
+# Por defecto (archivos sin regla propia): cualquiera de los 4
+*                         @LSJ-tech @digicamilo-lgtm @gntonietti89-code @true-max-02
 
-# Gianni Antonietti — feat/math-engine
-# /js/mathEngine.js           <usuario-gianni>
+# Compartidos: cualquiera de los 4 puede aprobar en GitHub, pero el equipo acordó
+# esperar la aprobación de los 4 antes de mergear (CONTRIBUTING.md §5).
+/js/contracts.js          @LSJ-tech @digicamilo-lgtm @gntonietti89-code @true-max-02
+/.github/                 @LSJ-tech @digicamilo-lgtm @gntonietti89-code @true-max-02
+/AUDITORIA.md             @LSJ-tech @digicamilo-lgtm @gntonietti89-code @true-max-02
+/AGENTS.md                @LSJ-tech @digicamilo-lgtm @gntonietti89-code @true-max-02
+/CLAUDE.md                @LSJ-tech @digicamilo-lgtm @gntonietti89-code @true-max-02
+/GEMINI.md                @LSJ-tech @digicamilo-lgtm @gntonietti89-code @true-max-02
 
-# Camilo Sepúlveda — feat/ui-charts
-# /index.html                 <usuario-camilo>
-# /css/                       <usuario-camilo>
-# /js/uiController.js         <usuario-camilo>
-# /js/chartManager.js         <usuario-camilo>
-# /js/main.js                 <usuario-camilo>
+# Gianni Antonietti (feat/math-engine) · revisa Maximiliano
+/js/mathEngine.js         @gntonietti89-code @true-max-02
 
-# Maximiliano Montoya — feat/validation-qa
-# /js/validator.js            <usuario-maximiliano>
-# /tests/                     <usuario-maximiliano>
-# /package.json               <usuario-maximiliano>
+# Camilo Sepúlveda (feat/ui-charts) · revisa Logan
+/index.html               @digicamilo-lgtm @LSJ-tech
+/css/                     @digicamilo-lgtm @LSJ-tech
+/js/uiController.js       @digicamilo-lgtm @LSJ-tech
+/js/chartManager.js       @digicamilo-lgtm @LSJ-tech
+/js/main.js               @digicamilo-lgtm @LSJ-tech
 
-# Logan Silva — feat/docs-content
-# /README.md                  <usuario-logan>
-# /CONTRIBUTING.md            <usuario-logan>
-# /js/content.js              <usuario-logan>
-# /docs/                      <usuario-logan>
+# Maximiliano Montoya (feat/validation-qa) · revisa Gianni
+/js/validator.js          @true-max-02 @gntonietti89-code
+/tests/                   @true-max-02 @gntonietti89-code
+/package.json             @true-max-02 @gntonietti89-code
+
+# Logan Silva (feat/docs-content) · revisa Camilo
+/README.md                @LSJ-tech @digicamilo-lgtm
+/CONTRIBUTING.md          @LSJ-tech @digicamilo-lgtm
+/js/content.js            @LSJ-tech @digicamilo-lgtm
+/docs/                    @LSJ-tech @digicamilo-lgtm

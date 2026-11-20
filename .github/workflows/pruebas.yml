@@ -1,0 +1,32 @@
+# Corre la batería de validación (npm test) en cada PR y push a dev/main.
+# Sin dependencias: solo Node. Ver README §6 y tests/run.js.
+#
+# Ojo: mientras tests/run.js no salga con código 1 ante un error (AUDITORIA.md · A-06),
+# este check queda en verde aunque el validador no exista todavía.
+
+name: Pruebas
+
+on:
+  pull_request:
+    branches: [dev, main]
+  push:
+    branches: [dev, main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pruebas-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validacion:
+    name: npm test
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - run: npm test

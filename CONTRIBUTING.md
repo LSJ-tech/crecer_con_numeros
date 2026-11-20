@@ -21,6 +21,13 @@ Las cuatro ramas `feat/*` son **de larga duración**: cada integrante trabaja si
 
 ## 0. Preparación del repositorio (una sola vez, la persona que tiene el andamiaje)
 
+> ✅ **Hecho el 2026-11-20** (PR #1 y PR #2).
+> - `dev` existe y es la rama por defecto.
+> - `main` y `dev` están protegidas: PR, 1 aprobación, revisión de Code Owners, check `npm test` obligatorio, sin excepciones para administradores, sin force-push.
+> - `CODEOWNERS` tiene los logins reales.
+>
+> Esta sección queda como referencia. Cada integrante empieza en el **§1**.
+
 ```bash
 # Subir el andamiaje a main mediante un PR
 git switch -c chore/scaffolding
@@ -76,10 +83,12 @@ git switch <tu-rama>
 git fetch origin
 git merge origin/dev                # SIEMPRE al empezar: trae lo que ya integraron los demás
 
+# … tomar tu siguiente tarea de AUDITORIA.md §5 (P1 → P2 → P3) …
 # … trabajar SOLO en tus archivos …
+# … actualizar AUDITORIA.md: marcar [x] la tarea, cerrar hallazgos y agregar una línea al Registro …
 
 git status                          # revisar qué cambió
-git add js/mathEngine.js            # agregar archivos por nombre, no "git add ."
+git add js/mathEngine.js AUDITORIA.md   # agregar archivos por nombre, no "git add ."
 git commit -m "feat(math): implementar valorFuturoAportes con caso borde i = 0"
 git push
 ```
@@ -132,6 +141,8 @@ gh pr create --base dev --head feat/math-engine --title "feat(math): duplicació
 | `feat/docs-content` | Camilo | Que las claves de `content.js` coincidan con los `data-content` del HTML |
 | `feat/ui-charts` | Logan | Textos, accesibilidad y que los resultados coincidan con los casos |
 
+[`CODEOWNERS`](.github/CODEOWNERS) aplica esta tabla automáticamente. Cada archivo tiene **dueño + revisor**, porque GitHub no cuenta la aprobación del propio autor. Si un archivo tuviera un solo dueño, sus PR quedarían bloqueados. Para mergear hace falta **1 aprobación de un code owner** y el check **`npm test`** en verde.
+
 **Tipo de merge:** *Create a merge commit* (no *Squash*), porque las ramas `feat/*` siguen vivas.
 
 **Después de cada merge, todos:**
@@ -165,6 +176,8 @@ git commit -m "chore(contracts): agregar campo <x> a ResumenSimulacion"
 git push -u origin chore/contracts-<cambio>
 # PR a dev → necesita la aprobación de los 4 → merge → todos hacen "git merge origin/dev"
 ```
+
+> **Ojo:** GitHub solo puede exigir **una** aprobación de un code owner. La regla de que aprueben los 4 es un **acuerdo del equipo**: quien abre el PR espera las 4 aprobaciones antes de mergear, aunque GitHub ya habilite el botón.
 
 Si necesitas un cambio en un archivo **de otra persona**, abre un *Issue* o pídeselo; no lo edites en tu rama.
 
@@ -200,10 +213,23 @@ git push
 
 Si te equivocaste a mitad del merge: `git merge --abort` y vuelves al estado anterior.
 
+## 8. Documentación viva y asistentes de IA
+
+- **[`AUDITORIA.md`](AUDITORIA.md)** es la fuente del estado del proyecto: hallazgos, tareas por integrante y prioridad, y registro de cambios. Todos lo actualizan **en el mismo PR** de su cambio:
+  - Marcan con `[x]` sus tareas terminadas, con fecha y PR.
+  - Cierran o agregan hallazgos.
+  - Dejan una línea en el Registro.
+- **README:** si tu cambio modifica un comportamiento, un contrato, un comando o la Hoja de ruta, actualízalo en el mismo PR. El dueño (Logan) lo revisa.
+- **Asistentes de IA** (Claude, Copilot, ChatGPT, Gemini, Cursor…): las reglas están en [`AGENTS.md`](AGENTS.md).
+  - Claude Code y Gemini lo cargan solos gracias a `CLAUDE.md` y `GEMINI.md`.
+  - Copilot usa `.github/copilot-instructions.md`.
+  - Con otro asistente, pídele explícitamente que lea `AGENTS.md` antes de trabajar.
+
 ## Reglas de oro
 
 1. Nunca hacer commit directo en `main` ni en `dev`.
-2. Editar solo tus archivos; usar `git add <archivo>`, no `git add .`.
+2. Editar solo tus archivos (más `AUDITORIA.md` y la Hoja de ruta del README). Usar `git add <archivo>`, no `git add .`.
 3. `git fetch origin && git merge origin/dev` al empezar cada sesión y antes de cada PR.
 4. PR pequeños, con la plantilla completa y las pruebas en verde.
 5. Nunca `git push --force` en ramas compartidas. Si de verdad lo necesitas en tu propia rama: `git push --force-with-lease`.
+6. Cada PR deja `AUDITORIA.md` al día: tus tareas marcadas, los hallazgos actualizados y una línea en el Registro.
