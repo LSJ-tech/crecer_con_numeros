@@ -1,14 +1,15 @@
 <!--
   NOTA PARA ASISTENTES DE IA (Claude, Copilot, ChatGPT, Gemini, Cursor, Codex u otro):
   Este archivo es la auditoría VIVA del proyecto y debe mantenerse al día.
-  Cada vez que hagas un cambio en el repositorio, en el MISMO Pull Request:
+  Cada vez que hagas un cambio en el repositorio, en el MISMO commit:
     1. Actualiza aquí el estado de los hallazgos que tu cambio cierra (§3) y agrega los nuevos que detectes.
-       Si tu cambio completa una tarea de §5, márcala con [x] y agrega "✅ AAAA-MM-DD · PR #N".
+       Si tu cambio completa una tarea de §5, márcala con [x] y agrega "✅ AAAA-MM-DD".
        Trabaja las tareas de tu integrante en orden de prioridad (P1 → P2 → P3).
-    2. Agrega una línea al Registro (§8): fecha · persona (+ IA usada) · qué cambió · PR.
+    2. Agrega una línea al Registro (§8): fecha · persona (+ IA usada) · qué cambió.
     3. Actualiza README.md si cambia un comportamiento, un contrato, un comando o la Hoja de ruta.
-    4. Sigue las reglas de AGENTS.md (cada archivo tiene dueño, nunca commit directo a main/dev, npm test antes del PR).
-  No borres hallazgos ni renumeres IDs. No marques nada como resuelto sin evidencia (PR, salida de npm test o captura).
+    4. Sigue las reglas de AGENTS.md: cada archivo tiene dueño, push directo solo a dev,
+       git pull --rebase y npm test antes de cada push, y NUNCA --force (las ramas no tienen protección).
+  No borres hallazgos ni renumeres IDs. No marques nada como resuelto sin evidencia (commit, salida de npm test o captura).
 -->
 
 # Auditoría del proyecto · Crecer con números
@@ -16,7 +17,7 @@
 | | |
 |---|---|
 | **Auditoría inicial** | 2026-11-20 · Logan Silva con Claude (Opus 5.5) |
-| **Última actualización** | 2026-11-20 · PR #2 |
+| **Última actualización** | 2026-11-20 · flujo con push directo a `dev` (A-24) |
 | **Versión auditada** | `v0.1.0` (andamiaje, commit `c03f153`) |
 | **Alcance** | Código (`js/`, `index.html`, `css/`), pruebas (`tests/`), configuración, documentos de `docs/` (Etapas 1 y 2 y presentación) y configuración del repositorio en GitHub |
 
@@ -35,13 +36,15 @@
 
 ## 1. Cómo mantener este documento
 
-Este archivo es **compartido**: cualquiera de los 4 lo actualiza dentro del PR de su propio cambio. Así la auditoría refleja siempre el estado real de `dev`.
+Este archivo es **compartido**: cualquiera de los 4 lo actualiza en el commit de su propio cambio. Así la auditoría refleja siempre el estado real de `dev`.
 
-- **Al cerrar un hallazgo:** cambia su estado a `✅ Resuelto · AAAA-MM-DD · PR #N`. No lo borres.
+- **Al cerrar un hallazgo:** cambia su estado a `✅ Resuelto · AAAA-MM-DD`. No lo borres.
 - **Si un hallazgo no aplica:** `⛔ Descartado · AAAA-MM-DD`, con la razón en una frase en el detalle (§4).
+- **Si el equipo decide no corregirlo:** `⚠️ Riesgo aceptado · AAAA-MM-DD`, con la decisión y cómo se mitiga en el detalle.
 - **Si queda a medias:** `🟨 Parcial`, con lo que falta en el detalle.
 - **Hallazgo nuevo:** usa el siguiente ID libre (`A-24`, `A-25`…). Agrégalo a la tabla de §3 y su detalle a §4, con **evidencia** (archivo y línea) y **solución propuesta**.
-- **Al terminar una tarea de §5:** márcala `- [x]` y agrega `✅ AAAA-MM-DD · PR #N`. Marca solo tus propias tareas.
+- **Al terminar una tarea de §5:** márcala `- [x]` y agrega `✅ AAAA-MM-DD`. Marca solo tus propias tareas.
+- **Si dos personas editan este archivo al mismo tiempo:** al hacer `git pull --rebase`, el conflicto típico es en el Registro. Conserva **ambas** líneas.
 - **Siempre:** una línea en el [Registro](#8-registro-de-cambios).
 - **Si cambia `js/mathEngine.js` o `tests/validationCases.js`:** vuelve a correr `npm test` y revisa la tabla de §6.
 
@@ -60,7 +63,7 @@ El andamiaje está bien diseñado: contratos claros, módulos que no se pisan y 
 | ID | Sev. | Área | Hallazgo | Dueño | Estado |
 |---|:---:|---|---|---|---|
 | A-01 | 🔴 | Repo | Maximiliano no tiene acceso: su invitación está pendiente | Maximiliano | Pendiente |
-| A-02 | 🔴 | Repo | No existía `dev`, `main` estaba sin protección y la rama por defecto era `main` | Logan | ✅ Resuelto · 2026-11-20 · PR #2 |
+| A-02 | 🔴 | Repo | No existía `dev` y la rama por defecto era `main` | Logan | ✅ Resuelto · 2026-11-20 · PR #2 |
 | A-03 | 🔴 | Repo | `CODEOWNERS` con un solo dueño por archivo habría bloqueado los PR | Los 4 | ✅ Resuelto · 2026-11-20 · PR #2 |
 | A-04 | 🔴 | Docs | La presentación (`.pptx`) describe otro producto, con otras referencias y otro cronograma | Logan + Gianni | Pendiente |
 | A-05 | 🔴 | Docs | Etapa 2, respuesta 4: «Los aportes suman $6.000.000, por lo que el interés es $2.411.123,47» no cuadra | Logan | Pendiente |
@@ -82,26 +85,26 @@ El andamiaje está bien diseñado: contratos claros, módulos que no se pisan y 
 | A-21 | 🟡 | Privacidad | Repo público con correos institucionales en los commits | Cada integrante | Pendiente (opcional) |
 | A-22 | 🟡 | Contenido | `content.js`: 14 textos y 6 listas vacías | Logan | Pendiente |
 | A-23 | 🟠 | Motor | `mathEngine.js` sin implementar (14 funciones): es la ruta crítica | Gianni | Pendiente |
+| A-24 | 🟠 | Repo | `main` y `dev` sin protección: cualquiera puede subir a `main` o hacer force-push | Los 4 | ⚠️ Riesgo aceptado · 2026-11-20 |
 
 ## 4. Detalle de cada hallazgo
 
 ### A-01 · Maximiliano no tiene acceso al repositorio 🔴
 
 - **Evidencia:** la invitación a `true-max-02` (permiso *write*) sigue pendiente desde el 2026-11-16. Mientras no la acepte, no puede hacer push y GitHub ignora su usuario en `CODEOWNERS`.
-- **Efecto en `CODEOWNERS`:** GitHub marca `@true-max-02` como *Unknown owner* en las 11 líneas donde aparece. Para no bloquear la ruta crítica, `@LSJ-tech` quedó como revisor **temporal** de `js/mathEngine.js`.
-- **Solución:**
-  1. Maximiliano acepta en <https://github.com/LSJ-tech/crecer_con_numeros/invitations> o desde el correo de GitHub. Las invitaciones vencen a los 7 días; si vence, Logan la reenvía en *Settings → Collaborators*.
-  2. Cuando acepte, quitar `@LSJ-tech` de la línea de `js/mathEngine.js` en `CODEOWNERS` (PR `chore/*`) y marcar este hallazgo como resuelto.
+- **Efecto en `CODEOWNERS`:** GitHub marca `@true-max-02` como *Unknown owner* en las líneas donde aparece. Se corrige solo cuando acepte.
+- **Solución:** Maximiliano acepta en <https://github.com/LSJ-tech/crecer_con_numeros/invitations> o desde el correo de GitHub. Las invitaciones vencen a los 7 días; si vence, Logan la reenvía en *Settings → Collaborators*.
 
-### A-02 · Ramas y protección 🔴 · ✅
+### A-02 · Rama de trabajo `dev` 🔴 · ✅
 
-- **Evidencia:** en GitHub solo existían `main` y `chore/scaffolding`. `main` no tenía protección y era la rama por defecto.
-- **Solución aplicada:** se creó `dev` desde `main` y quedó como rama por defecto. `main` y `dev` quedaron protegidas: PR obligatorio, 1 aprobación, revisión de Code Owners, check `npm test` requerido, sin excepciones para administradores, sin force-push ni borrado. Cada integrante crea su rama `feat/*` con CONTRIBUTING.md §1.
+- **Evidencia:** en GitHub solo existían `main` y `chore/scaffolding`, y `main` era la rama por defecto.
+- **Solución aplicada:** se creó `dev` desde `main` y quedó como rama por defecto. Es la rama de trabajo diaria y los 4 hacen push directo ahí (CONTRIBUTING §2). `main` solo se actualiza al cerrar una entrega. La protección de ramas se trata en A-24.
 
 ### A-03 · Diseño de `CODEOWNERS` 🔴 · ✅
 
 - **Evidencia:** el diseño original daba un solo dueño por archivo y pedía activar «Require review from Code Owners». GitHub no cuenta la aprobación del autor del PR, así que cada persona habría quedado bloqueada en sus propios PR. Además, con varios dueños en una línea GitHub exige la aprobación de **uno**, no de los 4.
 - **Solución aplicada:** `.github/CODEOWNERS` lista **dueño + revisor** según la tabla «Quién revisa» de CONTRIBUTING §3. La regla de que los 4 aprueben un cambio de contrato queda como **acuerdo del equipo** (CONTRIBUTING §5), porque GitHub no la puede imponer.
+- **Con push directo (A-24):** `CODEOWNERS` solo actúa cuando alguien abre un PR opcional, y entonces GitHub pide la revisión al dueño y al revisor.
 
 ### A-04 · La presentación no coincide con el producto 🔴
 
@@ -154,7 +157,7 @@ El andamiaje está bien diseñado: contratos claros, módulos que no se pisan y 
 
 ### A-12 · Sin integración continua 🟠 · ✅
 
-- **Solución aplicada:** `.github/workflows/pruebas.yml` corre `npm test` en cada PR y push a `dev` y `main`, y es un check requerido para mergear. Solo es útil de verdad cuando se cierre A-06.
+- **Solución aplicada:** `.github/workflows/pruebas.yml` corre `npm test` en cada push a `dev` y `main` (y en los PR opcionales), y marca ✔ o ✘ junto a cada commit. No bloquea el push, porque no hay protección (A-24): quien vea ✘ en su commit lo arregla de inmediato. Solo es útil de verdad cuando se cierre A-06.
 
 ### A-13 · GitHub Pages no activado 🟠
 
@@ -218,11 +221,23 @@ Comprobado en Node 22 con `es-CL`:
 ### A-23 · Motor matemático sin implementar (ruta crítica) 🟠
 
 - **Evidencia:** las 14 funciones de `js/mathEngine.js` lanzan `NoImplementadoError`. Mientras eso siga así, todos los casos de Maximiliano quedan en PENDIENTE y Camilo no puede mostrar resultados.
-- **Solución:** PR pequeños en el orden de §5 (Gianni), empezando por los que desbloquean más casos.
+- **Solución:** entregas pequeñas en el orden de §5 (Gianni), empezando por las que desbloquean más casos.
+
+### A-24 · Ramas sin protección 🟠 · ⚠️ Riesgo aceptado
+
+- **Decisión del equipo (2026-11-20):** `main` y `dev` quedan sin protección en GitHub para que los 4 puedan hacer push directo, sin PR ni aprobaciones.
+- **Riesgo:**
+  - Cualquiera puede subir a `main` por error, o borrar el trabajo de otro con `git push --force`.
+  - No hay revisión previa: un error se ve recién cuando ya está subido.
+- **Cómo se mitiga:**
+  - Las reglas de oro de CONTRIBUTING: solo tus archivos, `git pull --rebase` antes de cada push y **nunca** `--force`. `AGENTS.md` obliga a lo mismo a las IA del equipo.
+  - El CI marca ✘ en el commit que rompe las pruebas (A-12).
+  - Revisión posterior y semanal de los commits del compañero asignado (CONTRIBUTING §3).
+- **Opción intermedia, si el equipo cambia de idea:** una regla de protección que **solo** bloquee el force-push y el borrado de `main` y `dev`. No exige PR ni aprobaciones, así que mantiene el push directo y elimina el riesgo más grave.
 
 ## 5. Tareas por integrante (en orden de prioridad)
 
-Cada integrante trabaja su lista **de arriba hacia abajo**. Cuando termina una tarea, la marca en el **mismo PR** en que la entrega: cambia `- [ ]` por `- [x]` y agrega al final `✅ AAAA-MM-DD · PR #N`. GitHub muestra esas casillas como ✔. Si la tarea cierra un hallazgo, también se actualiza su estado en §3.
+Cada integrante trabaja su lista **de arriba hacia abajo**. Cuando termina una tarea, la marca en el **mismo commit** en que la entrega: cambia `- [ ]` por `- [x]` y agrega al final `✅ AAAA-MM-DD`. GitHub muestra esas casillas como ✔. Si la tarea cierra un hallazgo, también se actualiza su estado en §3.
 
 | Prioridad | Significado |
 |---|---|
@@ -231,56 +246,56 @@ Cada integrante trabaja su lista **de arriba hacia abajo**. Cuando termina una t
 | **P3** | Cierre: hacer cuando estén listas tus P1 y P2 |
 
 **Dependencias entre personas:**
-- Max acepta la invitación y Gianni entrega el PR 1 del motor, lo que desbloquea a Max y a Camilo.
+- Max acepta la invitación y Gianni sube la entrega 1 del motor, lo que desbloquea a Max y a Camilo.
 - Camilo implementa `renderizarContenido()` y Logan `obtenerTexto()`, y con eso aparecen los textos en la página.
 - Todo se integra en `dev` y luego se entrega `v1.0.0` en `main`.
 
-### Gianni Antonietti · motor matemático (`feat/math-engine`)
+### Gianni Antonietti · motor matemático (ámbito `math`)
 
-Su trabajo desbloquea a todos: conviene que abra el **primer PR lo antes posible**. Reglas del motor: funciones puras, sin DOM, **sin redondear** y tasas en decimal.
+Su trabajo desbloquea a todos: conviene que suba la **entrega 1 lo antes posible**. Reglas del motor: funciones puras, sin DOM, **sin redondear** y tasas en decimal.
 
-- [ ] **P1** · Crear su rama `feat/math-engine` (CONTRIBUTING §1).
-- [ ] **P1** · **PR 1, sin aportes** (A-23):
+- [ ] **P1** · Clonar el repo (o hacer `git pull`) y trabajar en `dev` (CONTRIBUTING §1).
+- [ ] **P1** · **Entrega 1, sin aportes** (A-23):
   - `tasaMensual`, `mesesTotales` y `saldoSinAportes`.
   - `montoFinalSinAportes`, reutilizando `saldoSinAportes(P, r, 12 * t)`.
   - Pasan a OK los casos A1–A4, D1 y E1–E5.
-- [ ] **P1** · **PR 2, logaritmos** (A-23):
+- [ ] **P1** · **Entrega 2, logaritmos** (A-23):
   - `tiempoDuplicacion` con `Math.log1p(r / 12)`. Con r = 0 debe dar `Infinity`, nunca `NaN`.
   - `regla72`.
   - `tasaParaDuplicar`, que lanza `RangeError` si t ≤ 0.
   - Pasan a OK los casos B1–B5 y C1–C3.
-- [ ] **P2** · **PR 3, con aportes** (A-23):
+- [ ] **P2** · **Entrega 3, con aportes** (A-23):
   - `siguienteSaldo` y `serieSaldos`.
   - `valorFuturoAportes`, **con el caso i = 0 → M·n**. Sin ese caso la fórmula da `NaN`.
   - `montoFinalConAportes`.
   - Pasan a OK los casos D2–D4.
-- [ ] **P2** · **PR 4, API** (A-23):
+- [ ] **P2** · **Entrega 4, API** (A-23):
   - `validarParametros`: `Number.isFinite`, rangos de `LIMITES`, `Number.isInteger(t)`, y mensajes que nombren el parámetro.
   - `simular` y `resumenAnual`.
   - Pasan a OK los casos D5, D6 y el grupo X.
 - [ ] **P2** · Acordar con Maximiliano el comportamiento en los casos borde (A-07, A-08).
-- [ ] **P2** · Revisar el PR de `validator.js` de Maximiliano (CONTRIBUTING §3).
+- [ ] **P2** · Revisar en GitHub los cambios de Maximiliano en `validator.js` (CONTRIBUTING §3).
 - [ ] **P3** · Preparar el **video de la semana 5** (bitácora de la Etapa 2):
   - Usar los números reales del producto.
   - Decir correctamente la frase de los $6.000.000 (A-05).
   - Usar la presentación corregida (A-04, con Logan).
 
-### Maximiliano Montoya · validación y QA (`feat/validation-qa`)
+### Maximiliano Montoya · validación y QA (ámbito `qa`)
 
 - [ ] **P1** · **Aceptar la invitación al repositorio** (A-01). Sin esto no puede hacer push. Vence a los 7 días de enviada (2026-11-16).
-- [ ] **P1** · Crear su rama `feat/validation-qa` (CONTRIBUTING §1).
+- [ ] **P1** · Clonar el repo (o hacer `git pull`) y trabajar en `dev` (CONTRIBUTING §1).
 - [ ] **P1** · Implementar `dentroDeTolerancia` (aceptando `Infinity === Infinity`, A-07), `ejecutarCaso`, `ejecutarTodos` e `imprimirReporte`.
 - [ ] **P1** · Hacer que `tests/run.js` salga con código 1 ante un error real (A-06).
 - [ ] **P2** · Agregar los casos X1–X7 en `tests/validationCases.js`, relanzando lo que no sea `RangeError` (A-08).
 - [ ] **P2** · Implementar `renderizarReporte` y los estilos de `tests/test.html` por estado.
-- [ ] **P2** · Revisar los PR de Gianni.
+- [ ] **P2** · Revisar en GitHub los cambios de Gianni.
 - [ ] **P3** · Con Camilo, verificar ambas curvas en GeoGebra (caso D).
 
-### Camilo Sepúlveda · interfaz, gráfico e integración (`feat/ui-charts`)
+### Camilo Sepúlveda · interfaz, gráfico e integración (ámbitos `ui` y `chart`)
 
 Puede empezar **ya** con HTML y CSS. Conecta `simular()` cuando el motor esté en `dev`.
 
-- [ ] **P1** · Crear su rama `feat/ui-charts` (CONTRIBUTING §1).
+- [ ] **P1** · Clonar el repo (o hacer `git pull`) y trabajar en `dev` (CONTRIBUTING §1).
 - [ ] **P1** · `styles.css`: tokens, layout, componentes, utilidades y responsive.
 - [ ] **P1** · `uiController.js`:
   - `renderizarContenido` (desbloquea los textos de Logan) y `mostrarError`.
@@ -290,14 +305,14 @@ Puede empezar **ya** con HTML y CSS. Conecta `simular()` cuando el motor esté e
 - [ ] **P2** · `chartManager.js`: `crearGrafico` y `actualizarGrafico`, con colores que respondan al tema (A-17) y el SRI de Chart.js (A-11).
 - [ ] **P2** · `renderizarTabla` y `renderizarResumen`, con la vista anual por defecto (A-15).
 - [ ] **P2** · Accesibilidad: anuncio con `aria-live` acotado (A-10) y `aria-valuetext` en los sliders (A-16).
-- [ ] **P2** · Revisar los PR de Logan.
+- [ ] **P2** · Revisar en GitHub los cambios de Logan.
 - [ ] **P3** · `generarComandosGeoGebra` y verificación de curvas con Maximiliano.
 - [ ] **P3** · Etiquetar «(sin aportes)» las tarjetas de duplicación y tasa (A-09, con Logan).
 
-### Logan Silva · documentación y contenidos (`feat/docs-content`)
+### Logan Silva · documentación y contenidos (ámbitos `docs` y `content`)
 
-- [x] **P1** · Crear `dev`, proteger `main` y `dev`, configurar `CODEOWNERS` en pares y el CI (A-02, A-03, A-12). ✅ 2026-11-20 · PR #2
-- [ ] **P1** · Crear su rama `feat/docs-content` (CONTRIBUTING §1).
+- [x] **P1** · Crear `dev` como rama de trabajo, configurar `CODEOWNERS` en pares y el CI (A-02, A-03, A-12). ✅ 2026-11-20
+- [ ] **P1** · Trabajar en `dev` con `git pull --rebase` antes de cada push (CONTRIBUTING §2).
 - [ ] **P1** · Confirmar que Maximiliano aceptó la invitación y reenviarla si venció (A-01).
 - [ ] **P1** · Implementar `obtenerTexto()` en `content.js` (A-22).
 - [ ] **P1** · Avisar al equipo de la frase correcta de los $6.000.000 para el video y la defensa (A-05).
@@ -306,7 +321,7 @@ Puede empezar **ya** con HTML y CSS. Conecta `simular()` cuando el motor esté e
   - Contexto, ayudas de parámetros y notas de las tarjetas (A-09).
   - Modelos, supuestos y referencias.
 - [ ] **P2** · Corregir las citas APA en el README (A-18).
-- [ ] **P2** · Revisar los PR de Camilo.
+- [ ] **P2** · Revisar en GitHub los cambios de Camilo.
 - [ ] **P3** · Renombrar los archivos de `docs/`, agregar `LICENSE` y borrar la rama `chore/scaffolding` (A-20).
 - [ ] **P3** · Activar GitHub Pages y completar la institución y el enlace en el README (A-13, A-19).
 
@@ -314,7 +329,7 @@ Puede empezar **ya** con HTML y CSS. Conecta `simular()` cuando el motor esté e
 
 - [ ] **P1** · Leer `AUDITORIA.md` y `AGENTS.md`, o pedirle a su asistente de IA que los lea antes de trabajar.
 - [ ] **P3** · Revisión cruzada final: cada uno ejecuta y explica el producto completo.
-- [ ] **P3** · PR `dev → main`, etiqueta `v1.0.0` y publicación en GitHub Pages (CONTRIBUTING §6).
+- [ ] **P3** · Pasar `dev` a `main`, etiqueta `v1.0.0` y publicación en GitHub Pages (CONTRIBUTING §6).
 - [ ] Opcional · Usar el correo privado de GitHub en los commits (A-21).
 
 ## 6. Verificación matemática
@@ -361,6 +376,7 @@ Otros datos de la Etapa 2 también verificados: los incrementos entre intervalos
 
 ## 8. Registro de cambios
 
-| Fecha | Quién | Qué cambió | PR |
+| Fecha | Quién | Qué cambió | Ref. |
 |---|---|---|---|
-| 2026-11-20 | Logan Silva + Claude (Opus 5.5) | Auditoría inicial (A-01 a A-23). Se crea `dev` (rama por defecto), `CODEOWNERS` en pares, CI con `npm test`, protección de `main` y `dev`, instrucciones para asistentes de IA (`AGENTS.md`) y `AUDITORIA.md`. Se cierran A-02, A-03 y A-12; A-19 queda parcial. | #2 |
+| 2026-11-20 | Logan Silva + Claude (Opus 5.5) | Auditoría inicial (A-01 a A-23). Se crea `dev` (rama por defecto), `CODEOWNERS` en pares, CI con `npm test`, instrucciones para asistentes de IA (`AGENTS.md`) y `AUDITORIA.md`. Se cierran A-02, A-03 y A-12; A-19 queda parcial. | PR #2 |
+| 2026-11-20 | Logan Silva + Claude (Opus 5.5) | El equipo decide trabajar con push directo a `dev`, sin protección de ramas (A-24, riesgo aceptado). CONTRIBUTING, README, `AGENTS.md` y esta auditoría pasan al nuevo flujo (`git pull --rebase`, nunca `--force`). Se quita el revisor temporal del motor. | push a `dev` |

@@ -1,14 +1,17 @@
+<!-- Los PR son opcionales: el flujo normal es push directo a dev (CONTRIBUTING §2).
+     Úsalos para cambios grandes o de contratos (CONTRIBUTING §5). -->
+
 ## Qué cambia
 
 <!-- Una o dos frases. Ej.: "Implementa tiempoDuplicacion() y regla72(); los casos B1–B5 pasan a OK." -->
 
-## Rama de origen
+## Autor y ámbito
 
-- [ ] `feat/math-engine` (Gianni Antonietti)
-- [ ] `feat/ui-charts` (Camilo Sepúlveda)
-- [ ] `feat/validation-qa` (Maximiliano Montoya)
-- [ ] `feat/docs-content` (Logan Silva)
-- [ ] `chore/...` (cambio compartido, requiere aprobación de los 4)
+- [ ] Gianni Antonietti (`math`)
+- [ ] Camilo Sepúlveda (`ui`, `chart`)
+- [ ] Maximiliano Montoya (`qa`)
+- [ ] Logan Silva (`docs`, `content`)
+- [ ] Cambio compartido (`contracts`, `repo`): requiere el OK de los 4
 
 ## Hallazgos de la auditoría
 
@@ -20,7 +23,7 @@
 - [ ] Solo modifiqué archivos de los que soy responsable (`git diff --name-only origin/dev...HEAD`), más `AUDITORIA.md` y las casillas de la Hoja de ruta del README.
 - [ ] Sincronicé con `origin/dev` justo antes de abrir el PR.
 - [ ] `tests/test.html` o `npm test` no muestra casos en **FALLA** ni **ERROR**.
-- [ ] Actualicé **`AUDITORIA.md`**: hallazgos cerrados con fecha y PR, hallazgos nuevos y una línea en el Registro.
+- [ ] Actualicé **`AUDITORIA.md`**: hallazgos cerrados con fecha, tareas marcadas con `[x]`, hallazgos nuevos y una línea en el Registro.
 - [ ] Si cambié una firma, un comportamiento o un texto visible, actualicé el JSDoc y el README.
 - [ ] Sin `console.log` de depuración ni código comentado sobrante.
 

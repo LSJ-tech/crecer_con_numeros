@@ -1,8 +1,9 @@
-# Dueños de cada archivo: GitHub pide su revisión automáticamente en cada PR.
+# Dueños de cada archivo. El equipo hace push directo a dev (AUDITORIA.md · A-24), así que
+# este archivo solo actúa cuando alguien abre un PR opcional: GitHub pide la revisión automáticamente.
 #
 # Cada regla lista al DUEÑO y a su REVISOR (tabla "Quién revisa" de CONTRIBUTING.md §3).
-# Por qué en pares: GitHub no cuenta la aprobación del autor de un PR. Si el autor
-# fuera el único dueño de un archivo, su PR quedaría bloqueado para siempre.
+# Por qué en pares: GitHub no cuenta la aprobación del autor de un PR. Si algún día se exige
+# revisión de Code Owners y el autor fuera el único dueño, su PR quedaría bloqueado.
 #
 # Regla de GitHub: gana la ÚLTIMA línea que coincide con el archivo.
 # Con varios dueños en una línea, basta la aprobación de UNO de ellos.
@@ -22,24 +23,22 @@
 /CLAUDE.md                @LSJ-tech @digicamilo-lgtm @gntonietti89-code @true-max-02
 /GEMINI.md                @LSJ-tech @digicamilo-lgtm @gntonietti89-code @true-max-02
 
-# Gianni Antonietti (feat/math-engine) · revisa Maximiliano
-# TEMPORAL: @LSJ-tech es revisor de respaldo mientras Maximiliano no acepte la invitación
-# (AUDITORIA.md · A-01). Sin esto, los PR del motor quedarían bloqueados. Quitarlo cuando acepte.
-/js/mathEngine.js         @gntonietti89-code @true-max-02 @LSJ-tech
+# Gianni Antonietti (ámbito math) · revisa Maximiliano
+/js/mathEngine.js         @gntonietti89-code @true-max-02
 
-# Camilo Sepúlveda (feat/ui-charts) · revisa Logan
+# Camilo Sepúlveda (ámbitos ui, chart) · revisa Logan
 /index.html               @digicamilo-lgtm @LSJ-tech
 /css/                     @digicamilo-lgtm @LSJ-tech
 /js/uiController.js       @digicamilo-lgtm @LSJ-tech
 /js/chartManager.js       @digicamilo-lgtm @LSJ-tech
 /js/main.js               @digicamilo-lgtm @LSJ-tech
 
-# Maximiliano Montoya (feat/validation-qa) · revisa Gianni
+# Maximiliano Montoya (ámbito qa) · revisa Gianni
 /js/validator.js          @true-max-02 @gntonietti89-code
 /tests/                   @true-max-02 @gntonietti89-code
 /package.json             @true-max-02 @gntonietti89-code
 
-# Logan Silva (feat/docs-content) · revisa Camilo
+# Logan Silva (ámbitos docs, content) · revisa Camilo
 /README.md                @LSJ-tech @digicamilo-lgtm
 /CONTRIBUTING.md          @LSJ-tech @digicamilo-lgtm
 /js/content.js            @LSJ-tech @digicamilo-lgtm

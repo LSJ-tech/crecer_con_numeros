@@ -1,7 +1,7 @@
 <!--
   NOTA PARA ASISTENTES DE IA (Claude, Copilot, ChatGPT, Gemini, Cursor, Codex u otro):
   Antes de trabajar en este repositorio, lee AGENTS.md y AUDITORIA.md.
-  En cada PR debes mantener al día AUDITORIA.md (hallazgos, tareas marcadas con [x] y Registro) y este README
+  En cada commit debes mantener al día AUDITORIA.md (hallazgos, tareas marcadas con [x] y Registro) y este README
   (si cambia un comportamiento, un contrato, un comando, la estructura o la Hoja de ruta §8).
 -->
 
@@ -283,16 +283,18 @@ Constantes: `LIMITES` (rangos de los controles), `PARAMETROS_INICIALES` (reprodu
 
 ## 5. Equipo y responsabilidades
 
-| Integrante | Rol | Rama | Archivos (dueño exclusivo) |
+| Integrante | Rol | Ámbito de commit | Archivos (dueño exclusivo) |
 |---|---|---|---|
-| **Gianni Antonietti** | Motor matemático | `feat/math-engine` | `js/mathEngine.js` |
-| **Camilo Sepúlveda** | Interfaz, gráfico e integración | `feat/ui-charts` | `index.html`, `css/styles.css`, `js/uiController.js`, `js/chartManager.js`, `js/main.js` |
-| **Maximiliano Montoya** | Validación y QA | `feat/validation-qa` | `js/validator.js`, `tests/*`, `package.json` |
-| **Logan Silva** | Documentación y contenidos | `feat/docs-content` | `README.md`, `CONTRIBUTING.md`, `js/content.js`, `docs/` |
-| **Los 4** | Contratos compartidos | `chore/*` | `js/contracts.js`, `.github/*`, `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, archivos de configuración |
-| **Los 4** | Documentación viva | (en el PR de cada uno) | `AUDITORIA.md` y las casillas de la [Hoja de ruta](#8-hoja-de-ruta) |
+| **Gianni Antonietti** | Motor matemático | `math` | `js/mathEngine.js` |
+| **Camilo Sepúlveda** | Interfaz, gráfico e integración | `ui`, `chart` | `index.html`, `css/styles.css`, `js/uiController.js`, `js/chartManager.js`, `js/main.js` |
+| **Maximiliano Montoya** | Validación y QA | `qa` | `js/validator.js`, `tests/*`, `package.json` |
+| **Logan Silva** | Documentación y contenidos | `docs`, `content` | `README.md`, `CONTRIBUTING.md`, `js/content.js`, `docs/` |
+| **Los 4** | Contratos compartidos | `contracts`, `repo` | `js/contracts.js`, `.github/*`, `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, archivos de configuración |
+| **Los 4** | Documentación viva | (en el commit de cada uno) | `AUDITORIA.md` y las casillas de la [Hoja de ruta](#8-hoja-de-ruta) |
 
-**Prioridades y avance:** cada integrante tiene su lista de tareas ordenada por prioridad (P1 → P3) en [AUDITORIA.md §5](AUDITORIA.md#5-tareas-por-integrante-en-orden-de-prioridad). Al terminar una tarea, la marca con `[x]`, fecha y número de PR en el mismo PR en que la entrega.
+Todos trabajan en la rama **`dev`** con push directo (ver [§7](#7-flujo-de-trabajo-git)).
+
+**Prioridades y avance:** cada integrante tiene su lista de tareas ordenada por prioridad (P1 → P3) en [AUDITORIA.md §5](AUDITORIA.md#5-tareas-por-integrante-en-orden-de-prioridad). Al terminar una tarea, la marca con `[x]` y la fecha en el mismo commit en que la entrega.
 
 **Asistentes de IA:** si usas Claude, Copilot, ChatGPT, Gemini, Cursor u otro, pídele que lea [AGENTS.md](AGENTS.md) antes de trabajar. Ahí están las reglas de dueños, ramas y documentación.
 
@@ -335,7 +337,7 @@ cd crecer_con_numeros
 
 Cada caso termina en **OK**, **FALLA**, **PENDIENTE** (función aún sin implementar) o **ERROR**.
 
-- **Integración continua:** GitHub Actions ([`.github/workflows/pruebas.yml`](.github/workflows/pruebas.yml)) corre `npm test` en cada PR y push a `dev` y `main`. Es un check obligatorio para mergear.
+- **Integración continua:** GitHub Actions ([`.github/workflows/pruebas.yml`](.github/workflows/pruebas.yml)) corre `npm test` en cada push a `dev` y `main`, y marca ✔ o ✘ junto al commit. No bloquea el push: si ves ✘ en tu commit, arréglalo de inmediato.
 
 ### Publicar (GitHub Pages)
 
@@ -344,28 +346,29 @@ Cada caso termina en **OK**, **FALLA**, **PENDIENTE** (función aún sin impleme
 ## 7. Flujo de trabajo Git
 
 ```text
-main  ← versiones estables (entregas). Protegida.
- └── dev  ← integración. Protegida. Rama por defecto. Destino de todos los PR.
-      ├── feat/math-engine     (Gianni)
-      ├── feat/ui-charts       (Camilo)
-      ├── feat/validation-qa   (Maximiliano)
-      └── feat/docs-content    (Logan)
+main  ← versiones estables (entregas). Solo se actualiza al cerrar una entrega.
+ └── dev  ← rama de trabajo diaria y rama por defecto. Los 4 hacen push directo aquí.
 ```
 
 Ciclo diario resumido:
 
 ```bash
-git switch feat/<tu-rama>
-git fetch origin
-git merge origin/dev                 # traer lo último integrado
-# … trabajar SOLO en tus archivos …
-git add <tus-archivos>
+git switch dev
+git pull --rebase origin dev         # traer lo último que subieron los demás
+# … trabajar SOLO en tus archivos y actualizar AUDITORIA.md …
+npm test
+git add <tus-archivos> AUDITORIA.md
 git commit -m "feat(math): implementar tiempoDuplicacion con logaritmos"
-git push
-# PR en GitHub: base = dev  ←  compare = feat/<tu-rama>
+git pull --rebase origin dev         # justo antes de subir
+git push origin dev
 ```
 
-`main` y `dev` exigen un PR con **1 aprobación del revisor** que asigna [`CODEOWNERS`](.github/CODEOWNERS) (dueño + revisor por archivo) y el check **`npm test`** en verde. Nadie puede saltarse estas reglas, ni siquiera un administrador.
+Por decisión del equipo, `main` y `dev` **no tienen protección**: cualquiera puede hacer push directo ([AUDITORIA.md · A-24](AUDITORIA.md)). Por eso son obligatorias las reglas de CONTRIBUTING:
+- Solo tus archivos.
+- `git pull --rebase` antes de cada push.
+- **Nunca** `--force`.
+
+El CI marca ✔ o ✘ en cada commit. [`CODEOWNERS`](.github/CODEOWNERS) asigna revisores solo si alguien abre un PR, que es opcional.
 
 Comandos completos, convención de commits, orden de integración y resolución de conflictos en **[CONTRIBUTING.md](CONTRIBUTING.md)**.
 
@@ -373,14 +376,14 @@ Comandos completos, convención de commits, orden de integración y resolución 
 
 Resumen por entregable. El detalle por persona y prioridad está en [AUDITORIA.md §5](AUDITORIA.md#5-tareas-por-integrante-en-orden-de-prioridad).
 
-- [x] **Repositorio:** rama `dev`, protección de `main` y `dev`, `CODEOWNERS` en pares, CI y auditoría inicial (PR #2).
+- [x] **Repositorio:** rama `dev` como rama de trabajo, `CODEOWNERS` en pares, CI y auditoría inicial (PR #2).
 - [ ] **Los 4:** cerrar los hallazgos 🔴 de [AUDITORIA.md](AUDITORIA.md) (A-01, A-04, A-05).
 - [ ] **Gianni:** funciones de `mathEngine.js` → casos A–E en **OK**.
 - [ ] **Maximiliano:** `validator.js` + casos borde (grupo X) → `npm test` y `tests/test.html` operativos.
 - [ ] **Logan:** textos de `content.js` (contexto, fórmulas, supuestos, referencias APA).
 - [ ] **Camilo:** controles sincronizados, tarjetas, tabla mensual/anual y gráfico de dos curvas.
 - [ ] **Camilo + Maximiliano:** verificar ambas curvas contra GeoGebra (Caso D).
-- [ ] **Los 4:** revisión cruzada, PR `dev → main`, etiqueta `v1.0.0` y publicación en GitHub Pages.
+- [ ] **Los 4:** revisión cruzada, pasar `dev` a `main`, etiqueta `v1.0.0` y publicación en GitHub Pages.
 
 ## 9. Referencias
 

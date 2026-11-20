@@ -1,5 +1,6 @@
-# Corre la batería de validación (npm test) en cada PR y push a dev/main.
+# Corre la batería de validación (npm test) en cada push a dev/main y en los PR opcionales.
 # Sin dependencias: solo Node. Ver README §6 y tests/run.js.
+# No bloquea el push, porque no hay protección de ramas (AUDITORIA.md · A-24): marca ✔ o ✘ junto a cada commit.
 #
 # Ojo: mientras tests/run.js no salga con código 1 ante un error (AUDITORIA.md · A-06),
 # este check queda en verde aunque el validador no exista todavía.
