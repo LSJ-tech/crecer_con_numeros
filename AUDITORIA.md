@@ -17,7 +17,7 @@
 | | |
 |---|---|
 | **Auditoría inicial** | 2026-11-20 · Logan Silva con Claude (Opus 5.5) |
-| **Última actualización** | 2026-11-20 · push directo sin aprobaciones y sin `CODEOWNERS` (A-03, A-24) |
+| **Última actualización** | 2026-11-20 · documentos de `docs/` alineados entre sí y con el producto (A-04, A-05, A-18, A-25) |
 | **Versión auditada** | `v0.1.0` (andamiaje, commit `c03f153`) |
 | **Alcance** | Código (`js/`, `index.html`, `css/`), pruebas (`tests/`), configuración, documentos de `docs/` (Etapas 1 y 2 y presentación) y configuración del repositorio en GitHub |
 
@@ -42,7 +42,7 @@ Este archivo es **compartido**: cualquiera de los 4 lo actualiza en el commit de
 - **Si un hallazgo no aplica:** `⛔ Descartado · AAAA-MM-DD`, con la razón en una frase en el detalle (§4).
 - **Si el equipo decide no corregirlo:** `⚠️ Riesgo aceptado · AAAA-MM-DD`, con la decisión y cómo se mitiga en el detalle.
 - **Si queda a medias:** `🟨 Parcial`, con lo que falta en el detalle.
-- **Hallazgo nuevo:** usa el siguiente ID libre (`A-24`, `A-25`…). Agrégalo a la tabla de §3 y su detalle a §4, con **evidencia** (archivo y línea) y **solución propuesta**.
+- **Hallazgo nuevo:** usa el siguiente ID libre (`A-26`, `A-27`…). Agrégalo a la tabla de §3 y su detalle a §4, con **evidencia** (archivo y línea) y **solución propuesta**.
 - **Al terminar una tarea de §5:** márcala `- [x]` y agrega `✅ AAAA-MM-DD`. Marca solo tus propias tareas.
 - **Si dos personas editan este archivo al mismo tiempo:** al hacer `git pull --rebase`, el conflicto típico es en el Registro. Conserva **ambas** líneas.
 - **Siempre:** una línea en el [Registro](#8-registro-de-cambios).
@@ -55,7 +55,7 @@ Severidad: 🔴 crítico (bloquea al equipo o afecta la nota) · 🟠 importante
 El andamiaje está bien diseñado: contratos claros, módulos que no se pisan y una matemática **verificada**, porque todos los casos A–E coinciden con las fórmulas (§6). Los riesgos al 2026-11-20 están en tres frentes:
 
 1. **Repositorio:** Maximiliano aún no tiene acceso (A-01).
-2. **Coherencia académica:** la presentación describe otro producto (A-04) y la Etapa 2 tiene un error de razonamiento (A-05).
+2. **Coherencia académica:** ✅ resuelta el 2026-11-20. La presentación y las Tablas de las Etapas 1 y 2 ya describen el mismo producto, con las mismas fórmulas, cifras y referencias (A-04, A-05, A-18). Falta que el video use la presentación y la frase corregida.
 3. **Ruta crítica:** el motor matemático está sin implementar (A-23), y de él dependen la validación y la interfaz.
 
 ## 3. Hallazgos
@@ -65,8 +65,8 @@ El andamiaje está bien diseñado: contratos claros, módulos que no se pisan y 
 | A-01 | 🔴 | Repo | Maximiliano no tiene acceso: su invitación está pendiente | Maximiliano | Pendiente |
 | A-02 | 🔴 | Repo | No existía `dev` y la rama por defecto era `main` | Logan | ✅ Resuelto · 2026-11-20 · PR #2 |
 | A-03 | 🔴 | Repo | `CODEOWNERS` con un solo dueño por archivo habría bloqueado los PR | Los 4 | ⛔ Descartado · 2026-11-20 |
-| A-04 | 🔴 | Docs | La presentación (`.pptx`) describe otro producto, con otras referencias y otro cronograma | Logan + Gianni | Pendiente |
-| A-05 | 🔴 | Docs | Etapa 2, respuesta 4: «Los aportes suman $6.000.000, por lo que el interés es $2.411.123,47» no cuadra | Logan | Pendiente |
+| A-04 | 🔴 | Docs | La presentación (`.pptx`) describe otro producto, con otras referencias y otro cronograma | Logan + Gianni | ✅ Resuelto · 2026-11-20 |
+| A-05 | 🔴 | Docs | Etapa 2, respuesta 4: «Los aportes suman $6.000.000, por lo que el interés es $2.411.123,47» no cuadra | Logan | ✅ Resuelto · 2026-11-20 |
 | A-06 | 🟠 | QA | `npm test` termina en verde aunque el validador no exista | Maximiliano | Pendiente |
 | A-07 | 🟠 | QA | El caso borde X3 (`Infinity`) nunca puede pasar con el contrato actual | Maximiliano | Pendiente |
 | A-08 | 🟠 | QA | El patrón sugerido para X5 convierte un PENDIENTE en FALLA | Maximiliano | Pendiente |
@@ -79,13 +79,14 @@ El andamiaje está bien diseñado: contratos claros, módulos que no se pisan y 
 | A-15 | 🟡 | UI | La tabla mensual llega a 481 filas con 40 años | Camilo | Pendiente |
 | A-16 | 🟡 | UI | El slider de capital tiene 10.000 posiciones y le falta `aria-valuetext` | Camilo | Pendiente |
 | A-17 | 🟡 | UI | Los colores del gráfico no cambian si el sistema cambia de tema | Camilo | Pendiente |
-| A-18 | 🟡 | Docs | Citas APA: referencias sin cita en el texto y años sin a/b | Logan | Pendiente |
+| A-18 | 🟡 | Docs | Citas APA: referencias sin cita en el texto y años sin a/b | Logan | ✅ Resuelto · 2026-11-20 |
 | A-19 | 🟡 | Docs | `TODO` del README: curso, institución, docente y enlace | Logan | 🟨 Parcial |
-| A-20 | 🟡 | Repo | Nombres `(1)` en `docs/`, falta `LICENSE` y no se borró la rama `chore/scaffolding` | Logan | Pendiente |
+| A-20 | 🟡 | Repo | Nombres `(1)` en `docs/`, falta `LICENSE` y no se borró la rama `chore/scaffolding` | Logan | 🟨 Parcial |
 | A-21 | 🟡 | Privacidad | Repo público con correos institucionales en los commits | Cada integrante | Pendiente (opcional) |
 | A-22 | 🟡 | Contenido | `content.js`: 14 textos y 6 listas vacías | Logan | Pendiente |
 | A-23 | 🟠 | Motor | `mathEngine.js` sin implementar (14 funciones): es la ruta crítica | Gianni | Pendiente |
 | A-24 | 🟠 | Repo | `main` y `dev` sin protección: cualquiera puede subir a `main` o hacer force-push | Los 4 | ⚠️ Riesgo aceptado · 2026-11-20 |
+| A-25 | 🟡 | Docs | Etapa 2: la cursiva de las fuentes estaba guardada con un formato inválido de Word | Logan | ✅ Resuelto · 2026-11-20 |
 
 ## 4. Detalle de cada hallazgo
 
@@ -104,21 +105,28 @@ El andamiaje está bien diseñado: contratos claros, módulos que no se pisan y 
 - **Evidencia:** el diseño original daba un solo dueño por archivo y pedía activar «Require review from Code Owners». GitHub no cuenta la aprobación del autor del PR, así que cada persona habría quedado bloqueada en sus propios PR.
 - **Descartado (2026-11-20):** el equipo decidió que nadie aprueba los cambios de otro (A-24), así que se **eliminó** `.github/CODEOWNERS`. Sin aprobaciones, el problema ya no existe.
 
-### A-04 · La presentación no coincide con el producto 🔴
+### A-04 · La presentación no coincide con el producto 🔴 · ✅
 
-- **Evidencia:** `docs/Crecer con números (1).pptx` contradice a las Etapas 1 y 2 y al código:
+- **Evidencia (original):** `docs/Crecer con números (1).pptx` contradecía a las Etapas 1 y 2 y al código:
   - **Diapositivas 3, 5 y 7:** describen un selector de «qué variable calcular» y cálculos según una **meta** o capital objetivo, con periodicidad configurable. El producto real tiene 4 parámetros fijos (P, r, M, t), capitalización mensual y calcula la **duplicación**.
   - **Diapositivas 6 y 8:** llaman `A` al aporte y usan fórmulas genéricas en `C/P`. El proyecto usa `M` y `C(k)`.
   - **Diapositiva 4:** el cronograma (S2 modelar, S3 diseñar, S4 programar) no coincide con la bitácora de la Etapa 2 (S2 interfaz y programación, S3 pruebas, S4 redacción, S5 video).
   - **Diapositiva 11:** las referencias (OpenStax, Stewart, Gitman, MDN) no son las de las Etapas 1 y 2 (La Tercera, Ministerio de Economía, Lippman, Olivier, Levin).
 - **Por qué importa:** si se usa en el video de la semana 5, la profesora verá dos productos distintos.
-- **Solución recomendada:** rehacer las diapositivas 3–8 y 11 según el producto real (README §1 y §3) y el cronograma de la bitácora. La alternativa, agregar un modo «meta» al producto, exige cambiar `contracts.js` y no está en las Etapas 1 y 2, así que no se recomienda.
+- **Resuelto (2026-11-20):** ahora es `docs/Presentacion_Crecer_con_numeros.pptx`, con el mismo diseño y 12 diapositivas.
+  - **Diapositiva 2:** el problema usa el dato de Chile de la Etapa 1, y el gráfico pasó a ser el caso A real ($1.000.000 al 5 % durante 20 años → $2.712.640, frente a la «línea recta» de $2.000.000).
+  - **Diapositivas 3, 5 y 7:** describen el producto real: 4 controles, monto con y sin aportes, tasa para duplicar y tiempo de duplicación con la regla del 72.
+  - **Diapositiva 4:** el cronograma sigue la bitácora (Tabla 3).
+  - **Diapositiva 6:** usa la notación `M`, `i = r/12` y `C(k+1)`, y el gráfico es el caso D (S = $7.764.113,97).
+  - **Diapositiva 8:** muestra las 4 fórmulas del README §3.
+  - **Diapositivas 11 y 12:** traen las 7 referencias de las Etapas 1 y 2 en APA 7.
+  - Se descartó agregar un modo «meta» al producto, porque exige cambiar `contracts.js` y no está en las Etapas 1 y 2.
 
-### A-05 · Error de razonamiento en la Etapa 2, respuesta 4 🔴
+### A-05 · Error de razonamiento en la Etapa 2, respuesta 4 🔴 · ✅
 
-- **Evidencia:** `docs/Tabla_Etapa_2_v4 (1).docx` dice: «Los aportes suman $6.000.000, por lo que el interés generado es de $2.411.123,47». Pero 9.411.123,47 − 6.000.000 = **3.411.123,47**. El valor 2.411.123,47 es correcto solo si también se resta el capital inicial: 9.411.123,47 − (1.000.000 + 6.000.000).
+- **Evidencia (original):** `docs/Tabla_Etapa_2_v4 (1).docx` decía: «Los aportes suman $6.000.000, por lo que el interés generado es de $2.411.123,47». Pero 9.411.123,47 − 6.000.000 = **3.411.123,47**. El valor 2.411.123,47 es correcto solo si también se resta el capital inicial: 9.411.123,47 − (1.000.000 + 6.000.000).
 - **Estado del código:** correcto. `totalAportado = P + M·n` (README §3.2 y nota en `tests/validationCases.js`).
-- **Solución:** en el video, en la defensa y en cualquier versión nueva del documento, decir: «Los aportes mensuales suman $6.000.000; sumando el capital inicial, lo aportado en total es $7.000.000, por lo que el interés generado es de $2.411.123,47».
+- **Resuelto (2026-11-20):** `docs/Tabla_Etapa_2_v5.docx` ya dice: «Los aportes mensuales suman $6.000.000; sumando el capital inicial, lo aportado en total es $7.000.000, por lo que el interés generado es de $2.411.123,47». En el video y en la defensa hay que decirlo igual (tarea de Gianni en §5).
 
 ### A-06 · `npm test` en verde sin probar nada 🟠
 
@@ -186,22 +194,30 @@ Comprobado en Node 22 con `es-CL`:
 
 - **Solución:** en `chartManager`, escuchar `matchMedia('(prefers-color-scheme: dark)').addEventListener('change', …)`, volver a leer las variables CSS y llamar a `grafico.update('none')`.
 
-### A-18 · Citas APA 🟡
+### A-18 · Citas APA 🟡 · ✅
 
-- **Evidencia:** el README §9 lista Levin (2022), Lippman (2022a) y Olivier (2022b), pero el texto del README no las cita. En la Etapa 2 se escribe «Lippman, 2022» y «Olivier, 2022», y cada autor tiene **dos** obras de 2022.
-- **Solución:** citar cada referencia en el texto del README (por ejemplo, en §3.1, §3.2 y §3.4) y usar siempre las letras a/b. Mantener `content.js` sincronizado con README §9.
+- **Evidencia (original):** el README §9 listaba Levin (2022), Lippman (2022a) y Olivier (2022b), pero el texto del README no las citaba. En la Etapa 2 se escribía «Lippman, 2022» y «Olivier, 2022», y cada autor tiene **dos** obras de 2022.
+- **Resuelto (2026-11-20):**
+  - README §3.1 y §3.2 citan a Levin (2022), Lippman (2022a) y Olivier (2022b).
+  - La Etapa 2 usa 2022a/2022b en el texto y en las fuentes (Lippman 2022a = 9.03 y 2022b = 9.09; Olivier 2022a = 9.05 y 2022b = 11.02).
+  - El libro de Levin va en tipo oración: *Matemáticas discretas*.
+  - La presentación trae las mismas 7 referencias.
+- **Pendiente para Logan:** mantener `content.js` (`referencias.lista`) igual al README §9 cuando se complete (A-22).
 
 ### A-19 · `TODO` del README 🟡 · 🟨 Parcial
 
 - **Hecho (PR #2):** se agregaron la carrera (Ingeniería en Informática), la asignatura (MVFM01) y la docente (Giselle Mora Ocares), tomados de la portada de la presentación.
 - **Falta:** confirmar la institución y agregar el enlace a GitHub Pages (A-13).
 
-### A-20 · Orden del repositorio 🟡
+### A-20 · Orden del repositorio 🟡 · 🟨 Parcial
 
-- **Solución:**
-  - Renombrar con `git mv` los archivos de `docs/` sin el sufijo ` (1)`.
+- **Hecho (2026-11-20):** los archivos de `docs/` se renombraron sin el sufijo ` (1)`:
+  - `Tabla_Etapa_1_Final_v14.docx`
+  - `Tabla_Etapa_2_v5.docx`
+  - `Presentacion_Crecer_con_numeros.pptx`
+- **Falta:**
   - Acordar una licencia y agregar `LICENSE` (el README sugiere MIT).
-  - Borrar la rama ya integrada con `git push origin --delete chore/scaffolding`.
+  - Borrar las ramas ya integradas con `git push origin --delete chore/scaffolding chore/auditoria-gobernanza`.
 
 ### A-21 · Correos en commits públicos 🟡 (opcional)
 
@@ -220,6 +236,11 @@ Comprobado en Node 22 con `es-CL`:
 
 - **Evidencia:** las 14 funciones de `js/mathEngine.js` lanzan `NoImplementadoError`. Mientras eso siga así, todos los casos de Maximiliano quedan en PENDIENTE y Camilo no puede mostrar resultados.
 - **Solución:** entregas pequeñas en el orden de §5 (Gianni), empezando por las que desbloquean más casos.
+
+### A-25 · Cursiva inválida en las fuentes de la Etapa 2 🟡 · ✅
+
+- **Evidencia:** en las 5 fuentes de `docs/Tabla_Etapa_2_v4 (1).docx`, el título del libro en cursiva tenía **dos** bloques de formato (`<w:rPr>`) en el mismo fragmento. Eso no es válido en Word: LibreOffice lo mostraba en cursiva, pero Word puede ignorar la cursiva o reparar el archivo.
+- **Resuelto (2026-11-20):** en `docs/Tabla_Etapa_2_v5.docx` cada uno quedó como un solo bloque con cursiva y tamaño 9,5. El archivo pasa la validación de esquema de Office.
 
 ### A-24 · Ramas sin protección 🟠 · ⚠️ Riesgo aceptado
 
@@ -274,7 +295,7 @@ Su trabajo desbloquea a todos: conviene que suba la **entrega 1 lo antes posible
 - [ ] **P3** · Preparar el **video de la semana 5** (bitácora de la Etapa 2):
   - Usar los números reales del producto.
   - Decir correctamente la frase de los $6.000.000 (A-05).
-  - Usar la presentación corregida (A-04, con Logan).
+  - Usar la presentación corregida: `docs/Presentacion_Crecer_con_numeros.pptx` (A-04).
 
 ### Maximiliano Montoya · validación y QA (ámbito `qa`)
 
@@ -310,12 +331,12 @@ Puede empezar **ya** con HTML y CSS. Conecta `simular()` cuando el motor esté e
 - [ ] **P1** · Confirmar que Maximiliano aceptó la invitación y reenviarla si venció (A-01).
 - [ ] **P1** · Implementar `obtenerTexto()` en `content.js` (A-22).
 - [ ] **P1** · Avisar al equipo de la frase correcta de los $6.000.000 para el video y la defensa (A-05).
-- [ ] **P2** · Rehacer con Gianni las diapositivas 3–8 y 11 de la presentación (A-04).
+- [x] **P2** · Alinear la presentación y las Tablas de las Etapas 1 y 2 con el producto (A-04, A-05, A-25). ✅ 2026-11-20
 - [ ] **P2** · Completar los textos de `content.js` (A-22):
   - Contexto, ayudas de parámetros y notas de las tarjetas (A-09).
   - Modelos, supuestos y referencias.
-- [ ] **P2** · Corregir las citas APA en el README (A-18).
-- [ ] **P3** · Renombrar los archivos de `docs/`, agregar `LICENSE` y borrar la rama `chore/scaffolding` (A-20).
+- [x] **P2** · Corregir las citas APA en el README y en la Etapa 2 (A-18). ✅ 2026-11-20
+- [ ] **P3** · Agregar `LICENSE` y borrar las ramas `chore/*` ya integradas (A-20). Los archivos de `docs/` ya se renombraron.
 - [ ] **P3** · Activar GitHub Pages y completar la institución y el enlace en el README (A-13, A-19).
 
 ### Los 4
@@ -374,3 +395,4 @@ Otros datos de la Etapa 2 también verificados: los incrementos entre intervalos
 | 2026-11-20 | Logan Silva + Claude (Opus 5.5) | Auditoría inicial (A-01 a A-23). Se crea `dev` (rama por defecto), `CODEOWNERS` en pares, CI con `npm test`, instrucciones para asistentes de IA (`AGENTS.md`) y `AUDITORIA.md`. Se cierran A-02, A-03 y A-12; A-19 queda parcial. | PR #2 |
 | 2026-11-20 | Logan Silva + Claude (Opus 5.5) | El equipo decide trabajar con push directo a `dev`, sin protección de ramas (A-24, riesgo aceptado). CONTRIBUTING, README, `AGENTS.md` y esta auditoría pasan al nuevo flujo (`git pull --rebase`, nunca `--force`). Se quita el revisor temporal del motor. | push a `dev` |
 | 2026-11-20 | Logan Silva + Claude (Opus 5.5) | Nadie aprueba ni revisa los cambios de otro: se elimina `.github/CODEOWNERS` (A-03 descartado), junto con la tabla «Quién revisa» y las tareas de revisión. Los cambios a `contracts.js` solo requieren avisar al grupo antes. | push a `dev` |
+| 2026-11-20 | Logan Silva + Claude (Opus 5.5) | Documentos de `docs/` alineados entre sí y con el producto. Presentación rehecha en contenido con el mismo diseño: gráficos con los casos A y D, cronograma de la bitácora, notación y fórmulas de la Etapa 2 y las 7 referencias (A-04). Etapa 2: frase de los $6.000.000 (A-05), citas 2022a/b (A-18) y cursiva válida (A-25). Etapa 1: la propuesta nombra las dos curvas y la tasa para duplicar. README cita en el texto a Levin, Lippman (2022a) y Olivier (2022b). Archivos renombrados sin « (1)» (A-20 parcial). | push a `dev` |

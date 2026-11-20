@@ -83,13 +83,13 @@ Esta brecha entre percepción y dominio de los cálculos puede llevar a decision
 
 ### 3.1 Modelo sin aportes: sucesión geométrica
 
-Cada mes el saldo se multiplica por el mismo factor $(1 + i)$, por lo que forma una sucesión geométrica de razón $(1+i)$:
+Cada mes el saldo se multiplica por el mismo factor $(1 + i)$, por lo que forma una sucesión geométrica de razón $(1+i)$ (Levin, 2022):
 
 ```math
 C(k) = P\,(1+i)^{k}, \qquad i = \frac{r}{12}
 ```
 
-Evaluada en $k = 12t$ se obtiene la función exponencial del monto a $t$ años:
+Evaluada en $k = 12t$ se obtiene la función exponencial del monto a $t$ años (Lippman, 2022a):
 
 ```math
 A(t) = P\left(1 + \frac{r}{12}\right)^{12t}
@@ -103,7 +103,7 @@ Con un aporte $M$ al final de cada mes la sucesión deja de ser geométrica pura
 C(0) = P, \qquad C(k+1) = C(k)\,(1+i) + M
 ```
 
-Al iterar la recurrencia $n = 12t$ veces se obtiene la forma cerrada, suma del capital inicial capitalizado y del valor futuro de la serie de aportes (serie geométrica):
+Al iterar la recurrencia $n = 12t$ veces se obtiene la forma cerrada, suma del capital inicial capitalizado y del valor futuro de la serie de aportes, que es una serie geométrica (Olivier, 2022b):
 
 ```math
 C(n) = \underbrace{P\,(1+i)^{n}}_{A(t)} \;+\; \underbrace{M\,\frac{(1+i)^{n}-1}{i}}_{S}
@@ -190,7 +190,7 @@ crecer_con_numeros/
 │   ├── validationCases.js      # Casos A–E (Etapa 2) + casos borde            · Maximiliano
 │   ├── test.html               # Ejecutor en el navegador                     · Maximiliano
 │   └── run.js                  # Ejecutor en Node (npm test)                  · Maximiliano
-├── docs/                       # Documentos de las Etapas 1 y 2               · Logan
+├── docs/                       # Tablas de las Etapas 1 y 2 y presentación    · Logan
 ├── .github/
 │   ├── workflows/pruebas.yml   # CI: npm test en cada PR y push a dev/main     · Los 4
 │   ├── copilot-instructions.md # Instrucciones para GitHub Copilot           · Los 4
