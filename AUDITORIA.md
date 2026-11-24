@@ -57,6 +57,7 @@ El andamiaje está bien diseñado: contratos claros, módulos que no se pisan y 
 1. **Repositorio:** Maximiliano aún no tiene acceso (A-01).
 2. **Coherencia académica:** ✅ resuelta el 2026-11-20. La presentación y las Tablas de las Etapas 1 y 2 ya describen el mismo producto, con las mismas fórmulas, cifras y referencias (A-04, A-05, A-18). Falta que el video use la presentación y la frase corregida.
 3. **Ruta crítica:** el motor matemático está sin implementar (A-23), y de él dependen la validación y la interfaz.
+4. **Etapa 3 (2026-11-23):** la presentación de 11 diapositivas ya está en `docs/` (A-27). Faltan la captura real de la app, que el grupo confirme la Gantt, el mapa TFL y el reparto, y grabar el video.
 
 ## 3. Hallazgos
 
@@ -88,6 +89,7 @@ El andamiaje está bien diseñado: contratos claros, módulos que no se pisan y 
 | A-24 | 🟠 | Repo | `main` y `dev` sin protección: cualquiera puede subir a `main` o hacer force-push | Los 4 | ⚠️ Riesgo aceptado · 2026-11-20 |
 | A-25 | 🟡 | Docs | Etapa 2: la cursiva de las fuentes estaba guardada con un formato inválido de Word | Logan | ✅ Resuelto · 2026-11-20 |
 | A-26 | 🟡 | Accesibilidad | SonarCloud: el `canvas` del gráfico y el contenedor de la tabla usan atributos ARIA que marca como *code smell* | Camilo | Pendiente |
+| A-27 | 🔴 | Docs | Etapa 3: el enunciado exige 11 diapositivas en orden fijo y la presentación de la Etapa 2 no las cubría | Logan + Los 4 | 🟨 Parcial |
 
 ## 4. Detalle de cada hallazgo
 
@@ -285,6 +287,26 @@ Primer análisis de [SonarCloud](https://sonarcloud.io/project/overview?id=LSJ-t
   - **Gráfico:** usar la otra forma que documenta Chart.js: quitar `role` y `aria-label` del `canvas` y poner dentro un texto alternativo, por ejemplo `<canvas id="grafico-saldos"><p>Gráfico de líneas del saldo mes a mes, sin aportes y con aportes. Los mismos valores están en la Tabla de valores.</p></canvas>`. El `figcaption` y la tabla ya entregan los datos.
   - **Tabla:** cambiar el `div` con `role="region"` por `<section class="tabla__scroll" aria-labelledby="tabla-titulo" tabindex="0">`, lo que cierra `S6819`. El `tabindex="0"` se mantiene. Si SonarCloud sigue marcando `S6845`, Logan lo marca como *Accepted* en SonarCloud con la razón «contenedor con scroll: necesita foco de teclado (WCAG 2.1.1)». Es la única excepción justificada.
 
+### A-27 · Presentación de la Etapa 3 🔴 · 🟨 Parcial
+
+- **Evidencia:** el enunciado de la Evaluación Sumativa 3 (40 %) pide 11 diapositivas en un orden fijo, con fuentes enlazadas en las diapositivas 5, 6 y 10. Luego se graba un video de 8 a 15 minutos en el que aparecen los 4. `docs/Presentacion_Crecer_con_numeros.pptx` (Etapa 2) no cubría esa estructura:
+  - La portada no tenía la sección y mostraba la asignatura solo como «MVFM01».
+  - Faltaban el objetivo general y las preguntas, la consecuencia del problema, las respuestas a P1–P5 con sus fuentes y el mapa de impacto TFL.
+  - La diapositiva 7 mostraba la imagen de una app que no es la nuestra.
+- **Avance (2026-11-23):** se creó `docs/Presentacion_Etapa_3_Crecer_con_numeros.pptx`. La de la Etapa 2 queda intacta.
+  - Mantiene el mismo diseño y tiene las 11 diapositivas en el orden del enunciado.
+  - Cada diapositiva tiene notas del orador con quién presenta y qué dice.
+  - Las cifras salen de los casos verificados (§6).
+  - El mapa TFL usa la malla oficial de Ingeniería en Informática de INACAP (matrícula 2027), donde Funciones y Matrices está en el semestre 2.
+  - La bibliografía, en APA 7, trae las 7 referencias del README y la malla de INACAP.
+- **Falta:**
+  - **Diapositiva 7:** pegar en el marco punteado la captura real de la app cuando funcione, y borrar el gráfico y el aviso «pegar aquí…». En el video, mostrar la app en vivo con el caso D.
+  - **Diapositiva 4:** confirmar las semanas 6 a 8, los responsables y la marca clase/autónomo de cada tarea. Las semanas 1 a 5 vienen de la bitácora (Tabla 3).
+  - **Diapositiva 10:** revisar las asignaturas elegidas y las ideas de cada flecha.
+  - **Notas:** confirmar el reparto. Logan presenta las diapositivas 1, 2, 3 y 11; Maximiliano, la 4 y la 10; Gianni, la 5, la 6 y la 8; Camilo, la 7; y los 4, la 9.
+  - **Portada:** la sección quedó como «MVFM01». Si AAI muestra un sufijo, hay que corregirla.
+- **Nota:** la referencia de la malla de INACAP está solo en la presentación. README §9 y `content.js` no la llevan, porque no forma parte del producto.
+
 ## 5. Tareas por integrante (en orden de prioridad)
 
 Cada integrante trabaja su lista **de arriba hacia abajo**. Cuando termina una tarea, la marca en el **mismo commit** en que la entrega: cambia `- [ ]` por `- [x]` y agrega al final `✅ AAAA-MM-DD`. GitHub muestra esas casillas como ✔. Si la tarea cierra un hallazgo, también se actualiza su estado en §3.
@@ -373,10 +395,13 @@ Puede empezar **ya** con HTML y CSS. Conecta `simular()` cuando el motor esté e
 - [ ] **P3** · Acordar la licencia con el grupo y agregar `LICENSE` (A-20). Los archivos de `docs/` ya se renombraron.
 - [x] **P3** · Activar GitHub Pages y poner el enlace en el README (A-13). ✅ 2026-11-20
 - [x] **P3** · Confirmar la institución en el README (A-19): INACAP. ✅ 2026-11-20
+- [x] **P1** · Presentación de la Etapa 3 con las 11 diapositivas del enunciado y notas del orador (A-27). ✅ 2026-11-23
 
 ### Los 4
 
 - [ ] **P1** · Leer `AUDITORIA.md` y `AGENTS.md`, o pedirle a su asistente de IA que los lea antes de trabajar.
+- [ ] **P2** · Etapa 3 (A-27): confirmar en `docs/Presentacion_Etapa_3_Crecer_con_numeros.pptx` la carta Gantt (diapositiva 4), el mapa TFL (diapositiva 10) y el reparto de las notas del orador.
+- [ ] **P3** · Etapa 3 (A-27): pegar la captura real de la app en la diapositiva 7 (Camilo, cuando la app funcione) y grabar el video de 8 a 15 minutos en el que aparecen los 4.
 - [ ] **P3** · Prueba cruzada final: cada uno ejecuta y explica el producto completo.
 - [ ] **P3** · Pasar `dev` a `main`, etiqueta `v1.0.0` y publicación en GitHub Pages (CONTRIBUTING §6).
 - [ ] Opcional · Usar el correo privado de GitHub en los commits (A-21).
@@ -435,3 +460,4 @@ Otros datos de la Etapa 2 también verificados: los incrementos entre intervalos
 | 2026-11-20 | Logan Silva + Claude (Opus 5.5) | `content.js` completo: `obtenerTexto()` implementado y los 14 textos y 6 listas llenos desde el README y la Etapa 2, incluidas las notas «Escenario sin aportes» de las tarjetas de duplicación y de tasa. Verificado en Node: todas las claves del HTML tienen texto, y las referencias y los supuestos son idénticos al README. A-22 resuelto; A-09 parcial (falta la parte de Camilo). Institución confirmada: INACAP, en el README y en el pie (A-19 resuelto). | push a `dev` |
 | 2026-11-20 | Logan Silva + Claude (Opus 5.5) | Se borran las ramas remotas `chore/scaffolding` y `chore/auditoria-gobernanza`, ya integradas en `dev` (comprobado antes de borrar). Solo quedan `dev` y `main`. A-20 queda solo con `LICENSE`. | push a `dev` |
 | 2026-11-20 | Logan Silva + Claude (Opus 5.5) | Primer análisis de SonarCloud: Quality Gate en verde, 1 vulnerabilidad y 65 *code smells* (61 son `TODO` e imports del andamiaje). A-11 queda con el hash SRI de Chart.js verificado contra npm y jsDelivr, y es tarea P1 de Camilo. Se agrega A-26 (ARIA del `canvas` y de la tabla). SonarCloud se suma al README §6 y a la revisión posterior al push de `AGENTS.md`. | push a `dev` |
+| 2026-11-23 | Logan Silva + Claude (Opus 5.5) | Se agrega `docs/Presentacion_Etapa_3_Crecer_con_numeros.pptx`: 11 diapositivas en el orden del enunciado de la Etapa 3, notas del orador por integrante, cifras verificadas (§6), mapa TFL sobre la malla oficial de INACAP y 8 referencias APA 7. Se abre A-27 (🔴, parcial) con lo que falta confirmar y la captura real de la app. La presentación de la Etapa 2 queda igual. | push a `dev` |

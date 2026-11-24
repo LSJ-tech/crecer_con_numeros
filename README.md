@@ -191,7 +191,7 @@ crecer_con_numeros/
 │   ├── validationCases.js      # Casos A–E (Etapa 2) + casos borde            · Maximiliano
 │   ├── test.html               # Ejecutor en el navegador                     · Maximiliano
 │   └── run.js                  # Ejecutor en Node (npm test)                  · Maximiliano
-├── docs/                       # Tablas de las Etapas 1 y 2 y presentación    · Logan
+├── docs/                       # Tablas (E1, E2) y presentaciones (E2, E3)    · Logan
 ├── .github/
 │   ├── workflows/pruebas.yml   # CI: npm test en cada PR y push a dev/main     · Los 4
 │   ├── copilot-instructions.md # Instrucciones para GitHub Copilot           · Los 4
@@ -385,6 +385,8 @@ Resumen por entregable. El detalle por persona y prioridad está en [AUDITORIA.m
 - [ ] **Gianni:** funciones de `mathEngine.js` → casos A–E en **OK**.
 - [ ] **Maximiliano:** `validator.js` + casos borde (grupo X) → `npm test` y `tests/test.html` operativos.
 - [x] **Logan:** textos de `content.js` (contexto, fórmulas, supuestos, referencias APA) y `obtenerTexto()`.
+- [x] **Logan:** presentación de la Etapa 3 en `docs/` (11 diapositivas y notas del orador).
+- [ ] **Los 4:** Etapa 3 ([A-27](AUDITORIA.md)): confirmar la Gantt, el mapa TFL y el reparto, pegar la captura de la app y grabar el video (8–15 min).
 - [ ] **Camilo:** controles sincronizados, tarjetas, tabla mensual/anual y gráfico de dos curvas.
 - [ ] **Camilo + Maximiliano:** verificar ambas curvas contra GeoGebra (Caso D).
 - [ ] **Los 4:** prueba cruzada (cada uno ejecuta y explica el producto completo), pasar `dev` a `main`, etiqueta `v1.0.0` y publicación en GitHub Pages.
